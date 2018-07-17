@@ -59,7 +59,7 @@ def huberM(x,
         break
       mu = numpy.copy(mu1)
   if(se):
-    se2 = s * numpy.sqrt(tauHuber(x, mu, s, k)/n)
+    se2 = s * numpy.sqrt((tauHuber(x, mu, k, s))/n)
   else:
     se2 = numpy.NaN
   # return
