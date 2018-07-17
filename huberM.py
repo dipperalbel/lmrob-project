@@ -103,35 +103,27 @@ def sumU(x, weights):
   return(sums)
 
 # high weighted median 
-def wgtHighMedian(values, sample_weight=None, quantiles=[0.5], values_sorted=False, old_style=False):
+def wgtHighMedian(values, sample_weight=None, old_style=False):
     """ Very close to numpy.percentile, but supports weights.
     NOTE: quantiles should be in [0, 1]!
     :param values: numpy.array with data
-    :param quantiles: array-like with many quantiles needed
     :param sample_weight: array-like of the same length as `array`
-    :param values_sorted: bool, if True, then will avoid sorting of initial array
     :param old_style: if True, will correct output to be consistent with numpy.percentile.
     :return: numpy.array with computed quantiles.
     """
+    quantiles=[0.5]
     values = numpy.array(values)
     quantiles = numpy.array(quantiles)
     if sample_weight is None:
         sample_weight = numpy.ones(len(values))
     sample_weight = numpy.array(sample_weight)
     assert numpy.all(quantiles >= 0) and numpy.all(quantiles <= 1), 'quantiles should be in [0, 1]'
-
-    if not values_sorted:
-        sorter = numpy.argsort(values)
-        values = values[sorter]
-        sample_weight = sample_weight[sorter]
-
+    sorter = numpy.argsort(values)
+    values = values[sorter]
+    sample_weight = sample_weight[sorter]
     weighted_quantiles = numpy.cumsum(sample_weight) - 0.5 * sample_weight
-    if old_style:
-        # To be convenient with numpy.percentile
-        weighted_quantiles -= weighted_quantiles[0]
-        weighted_quantiles /= weighted_quantiles[-1]
-    else:
-        weighted_quantiles /= numpy.sum(sample_weight)
+  
+    weighted_quantiles /= numpy.sum(sample_weight)
     res = numpy.interp(quantiles, weighted_quantiles, values)
     # find closest value
     abs_diff = numpy.absolute(numpy.array(values-res))
