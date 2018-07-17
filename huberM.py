@@ -105,10 +105,8 @@ def sumU(x, weights):
 # high weighted median 
 def wgtHighMedian(values, sample_weight=None, old_style=False):
     """ Very close to numpy.percentile, but supports weights.
-    NOTE: quantiles should be in [0, 1]!
     :param values: numpy.array with data
     :param sample_weight: array-like of the same length as `array`
-    :param old_style: if True, will correct output to be consistent with numpy.percentile.
     :return: numpy.array with computed quantiles.
     """
     quantiles=[0.5]
