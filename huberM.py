@@ -84,7 +84,8 @@ def tauHuber(x, mu, k = 1.5, s = None, resid = None):
   return(res)
 
 # function for mad (median absolute deviation)
-def mad(data, center = None, constant = 1, axis = None):
+def mad(data, center = None, constant = 1 ):
+  axis = None
   "mad function mimicing R's mad function"
   # if no center given, take median)
   if(center == None):
@@ -103,28 +104,29 @@ def sumU(x, weights):
   return(sums)
 
 # high weighted median 
-def wgtHighMedian(values, sample_weight=None, old_style=False):
+def wgtHighMedian(x, weights=None):
     """ Very close to numpy.percentile, but supports weights.
     :param values: numpy.array with data
     :param sample_weight: array-like of the same length as `array`
     :return: numpy.array with computed quantiles.
     """
     quantiles=[0.5]
-    values = numpy.array(values)
+    x = numpy.array(x)
     quantiles = numpy.array(quantiles)
-    if sample_weight is None:
-        sample_weight = numpy.ones(len(values))
-    sample_weight = numpy.array(sample_weight)
+    if weights is None:
+        weights = numpy.ones(len(x))
+    if len(x) != len(weights):
+      raise ValueError('weights must have same length as x')
+    weights = numpy.array(weights)
     assert numpy.all(quantiles >= 0) and numpy.all(quantiles <= 1), 'quantiles should be in [0, 1]'
-    sorter = numpy.argsort(values)
-    values = values[sorter]
-    sample_weight = sample_weight[sorter]
-    weighted_quantiles = numpy.cumsum(sample_weight) - 0.5 * sample_weight
-  
-    weighted_quantiles /= numpy.sum(sample_weight)
-    res = numpy.interp(quantiles, weighted_quantiles, values)
+    sorter = numpy.argsort(x)
+    x = x[sorter]
+    weights = weights[sorter]
+    weighted_quantiles = numpy.cumsum(weights) - 0.5 * weights
+    weighted_quantiles /= numpy.sum(weights)
+    res = numpy.interp(quantiles, weighted_quantiles, x)
     # find closest value
-    abs_diff = numpy.absolute(numpy.array(values-res))
+    abs_diff = numpy.absolute(numpy.array(x-res))
     abs_idx = numpy.where(abs_diff == numpy.min(abs_diff))
-    fin = numpy.max(values[abs_idx])
+    fin = numpy.max(x[abs_idx])
     return(fin)
