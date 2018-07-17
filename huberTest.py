@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
 
 
-import imp
-import numpy
+import huberM
 
-huberM = imp.load_source('huberM', 'C:/Users/Alberto/Desktop/Tesi/huberM.py')
-huberM.huberM()
-aa = numpy.arange(1, 10)
-aa = numpy.append(aa,1000)
-huberM.huberM(aa)
-w_ = [1]*10
-w_[3] = 3
-w_[8] = 2
-huberM.huberM(aa,weights = w_)
+huberM.huberM([1,2,3,4,5,6,7,8,9,1000])
 
+huberM.huberM([1,2,3,4,5,6,7,8,9,1000], 4)
+
+huberM.huberM([11,20,14,15], 4, [2,2,4,5])
+
+huberM.huberM([11,20,14,15], 4, [2,2,4,5], 0.00002)
+
+huberM.huberM([11,20,14,15], 4, [2,2,4,5], 0.00002, 20)
