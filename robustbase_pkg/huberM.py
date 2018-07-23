@@ -7,9 +7,11 @@ import warnings
 def wgtHighMedian(x, weights = None):
     "Weighted high median"
     # make numpy array
+    # numpy.array(x) create an array from x and it assaign to  the variable x
     x = numpy.array(x)
        
     # sort x
+    # after the array is created, it is sorted
     x_sort = numpy.argsort(x)
     x = x[x_sort]
     
@@ -20,8 +22,11 @@ def wgtHighMedian(x, weights = None):
     weights = weights[x_sort]
     
     # cumSum and interpolate
+    # cumsum return an array with the cumulative sum of the elements. The array obtain it is substracted with  0.5 *  the array weights
     cumW = numpy.cumsum(weights) - 0.5 * weights
     cumW /= numpy.sum(weights)
+
+    #function interp
     res = numpy.interp(0.5, cumW, x)
     
     # find closest value
@@ -154,7 +159,7 @@ def huberM(x,
   else:
     while(1):
       it = it + 1
-      # import pmax and pmin here
+     
       y = numpy.minimum(numpy.maximum(mu - k * s, x), mu + k * s)
       if(weights == None):
         mu1 = numpy.sum(y)/sumW
