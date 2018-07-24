@@ -1,12 +1,7 @@
 import numpy
 import warnings
 
-"""
-Functions
-#########
 
-Robustbase functions
-"""
 
 def wgtHighMedian(x, weights=None):
     """
