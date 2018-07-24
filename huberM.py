@@ -47,14 +47,19 @@ def wgtHighMedian(x, weights = None):
 
 
 # function for mad (median absolute deviation)
-def mad(data, center = None, constant = 1, axis = None):
+def mad(x, center = None, constant = 1.4826, na_rm = False, low = False, high = False ):
   "mad function mimicing R's mad function"
-  # if no center given, take median)
+  axis = None
+  if (na_rm == True):
+    i = numpy.isnan(x)
+    x = numpy.array(x)[numpy.where(i == False)]
   if(center == None):
-    center = numpy.median(data, axis = None)  
-  # ! to mimic R mad function constant must be put to 1.4826 
-  # (I dont't see a obvious sense of the constant)
-  return constant*numpy.median(numpy.absolute(numpy.array(data) - center), axis)
+    center = numpy.median(x, axis = None)
+  if (low and high):
+    raise ValueError('x and weights not of same length')
+
+  
+  return constant*numpy.median(numpy.absolute(numpy.array(x) - center), axis)
 
 # test mad
 #mad([-1, -0.5, 0, 1, 2], center = 3)
