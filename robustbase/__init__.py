@@ -1,20 +1,72 @@
-# -*- coding: utf-8 -*-
-
 import numpy
 import warnings
+"""
+A Sphinx example and cheat sheet.
 
-# high weighted median
+Documenting Python Code
+#######################
 
+For documenting Python code, see ``module/__init__.py`` or the code example below:
+
+.. code-block:: python
+
+    class AClass:
+        \"\"\"
+        Class docstring, with reference to the :mod:`module`, or another class
+        :class:`module.AnotherClass` and its function :func:`module.AnotherClass.foo`.
+        \"\"\"
+    
+    class AnotherClass:
+        \"\"\"
+        Another class' docstring.
+        \"\"\"
+        
+        def foo(arg1, arg2):
+            \"\"\"
+            A method's docstring with parameters and return value.
+            
+            Use all the cool Sphinx capabilities in this description, e.g. to give
+            usage examples ...
+            
+            :Example:
+    
+            >>> another_class.foo('', AClass())        
+            
+            :param arg1: first argument
+            :type arg1: string
+            :param arg2: second argument
+            :type arg2: :class:`module.AClass`
+            :return: something
+            :rtype: string
+            :raises: TypeError
+            \"\"\"
+            
+            return '' + 1
+
+Functions
+#########
+
+Robustbase functions
+
+.. rubric:: Footnotes
+
+"""
 
 def wgtHighMedian(x, weights=None):
     """
     Compute the weighted Hi-Median of x.
+
+    :Example:
+
+    >>> module.wgtHighMedian([1,2,4,5,6,8,10,12])        
+
     :param x: numeric vector
     :type x: list
     :param weights: numeric vector of weights; of the same length as x.
     :type weights: list
-    :return: the weighted Hi-Median of x.
-    :rtype: integer
+    :return: The weighted Hi-Median of x.
+    :rtype: float
+    :raises: ValueError
     """
     # make numpy array
     # numpy.array(x) create an array from x and it assaign to  the variable x
@@ -47,26 +99,30 @@ def wgtHighMedian(x, weights=None):
     fin = numpy.max(x[abs_idx])
     return(fin)
 
-# test
-# wgtHighMedian(numpy.array([0,3,6,9]),numpy.array([1,3,3,1]))
-# wgtHighMedian(numpy.array([0,3,3,3,6,6,6,9]),None)
-# test cases wgt_himedian
-#a = numpy.array([1, 3, 5, 7])
-#b = numpy.array([1, 1, 0.5, 1])
-#a * b
-# wgtHighMedian(a)
-#wgtHighMedian(a, b)
-
-
 # function for mad (median absolute deviation)
 def mad(x, center=None, constant=1.4826, na_rm=False, low=False, high=False):
-    """Compute the median absolute deviation, i.e., the (lo-/hi-) median of the absolute deviations from the median, and (by default) adjust by a factor for asymptotically normal consistency.
+    """
+    Compute the median absolute deviation, i.e., the (lo-/hi-) median of the absolute deviations from the median, and (by default) adjust by a factor for asymptotically normal consistency.
+    
+    :Example:
+
+    >>> module.mad([1,2,4,5,6,8,10,12])
+
     :param x: numeric vector.
+    :type x: list
     :param center: optionally, the centre: defaults to the median.
+    :type center: float
     :param constant: scale factor.
+    :type constant: float
     :param na_rm: if True then NaN values are stripped from x before computation takes place.
+    :type na_rm: bool
     :param low: if True, compute the ‘lo-median’, i.e., for even sample size, do not average the two middle values, but take the smaller one.
+    :type low: bool
     :param high: if True, compute the ‘hi-median’, i.e., take the larger of the two middle values for even sample size.
+    :type high: bool
+    :return: the median absolute deviation
+    :rtype: float
+    :raises: ValueError
     """
     axis = None
     if (na_rm == True):
@@ -80,24 +136,29 @@ def mad(x, center=None, constant=1.4826, na_rm=False, low=False, high=False):
         if (low and high):
             raise ValueError('low and high cannot be both true')
         n2 = ((n//2) + high) - 1
-        # return constant * (numpy.partition((numpy.absolute(numpy.array(x) - center)), n2)))[n2]
         return constant * numpy.partition((numpy.absolute(numpy.array(x) - center)), n2)[n2]
     return constant*numpy.median(numpy.absolute(numpy.array(x) - center), axis)
 
-# test mad
-#mad([-1, -0.5, 0, 1, 2], center = 3)
-# mad([-1, -0.5, 0, 1, 2], center = 3, constant = 1.4826) # R default
-
-# function to determine correction factor Tau for Huber-M-estimator
-
-
 def tauHuber(x, mu, k=1.5, s=None, resid=None):
-    """Calculate correction factor Tau for the variance of Huber-M-Estimators.
+    """
+    Calculate correction factor Tau for the variance of Huber-M-Estimators.
+    
+    :Example:
+
+    >>> module.tauHuber([1,2,4,5,6,8,10,12])
+
     :param x: numeric vector.
+    :type x: list
     :param mu: location estimator.
+    :type mu: float
     :param k: tuning parameter of Huber Psi-function.
+    :type k: float
     :param s: scale estimator held constant through the iterations.
+    :type s: float
     :param resid: the value of (x - mu)/s .
+    :type resid: float
+    :return: The correction factor Tau for the variance of Huber-M-Estimators.
+    :rtype: float
     """
     # get needed parameters
     if(s == None):
@@ -115,29 +176,26 @@ def tauHuber(x, mu, k=1.5, s=None, resid=None):
     # return
     return(res)
 
-# test tauHuber
-#tauHuber([-1, -0.5, 0, 1, 2], mu = 3, resid = None)
-
-# helper function sum
-
-
 def sumU(x, weights):
-    """Calculate weighted sum
+    """
+    Calculate weighted sum
+    
+    :Example:
+
+    >>> module.sumU([1,2,4,5,6,8,10,12], [52,44,82,24,68,42,82,20])
+    
     :param x: numeric vector.
+    :type x: list
     :param weights: numeric vector of weights; of the same length as x.
+    :type weights: list
+    :return: The weighted sum.
+    :rtype: float
+    :raises: ValueError
     """
     if(len(x) != len(weights)):
         raise ValueError('x and weights not of same length')
     sums = numpy.sum(numpy.array(x) * numpy.array(weights))
     return(sums)
-
-# test sumU
-# load a and b above
-#sumU(a, b)
-# sumU(a, [1,2,3]) # cause error
-
-# huberM function
-
 
 def huberM(x,
            k=1.5,
@@ -147,15 +205,34 @@ def huberM(x,
            s=None,
            se=False,
            warn0scale=True):
-    """(Generalized) Huber M-estimator of location with MAD scale.
+    """
+    (Generalized) Huber M-estimator of location with MAD scale.
+
+    :Example:
+
+    
+    >>> module.huberM([1,2,4,5,6,8,10,12])
+
+
+
     :param x: numeric vector.
+    :type x: list
     :param k: positive factor; the algorithm winsorizes at k standard deviations.
+    :type k: float
     :param weights: numeric vector of non-negative weights of same length as x, or None.
+    :type weights: list
     :param tol: convergence tolerance.
+    :type tol: float
     :param mu: initial location estimator.
+    :type mu: float
     :param s: scale estimator held constant through the iterations.
+    :type s: float
     :param se: logical indicating if the standard error should be computed and returned (as SE component). Currently only available when weights is None.
+    :type se: bool
     :param warn0scale: logical; if True, and s is 0 and len(x) > 1, this will be warned about.
+    :type warn0scale: bool
+    :return: The tuple (mu, s , it , se ) containing the location, scale parameters, number of iterations used and the se component.
+    :rtype: tuple
     """
     # parse x
     x = numpy.array(x)
@@ -222,14 +299,3 @@ def huberM(x,
     # return
     mu2 = mu.item(0)
     return((mu2, s, it, se2))
-
-# test huberM
-#aa = numpy.arange(1, 10)
-#aa = numpy.append(aa,1000)
-# huberM(aa)
-#w_ = [1]*10
-#w_[3] = 3
-#w_[8] = 2
-#huberM(aa,weights = w_)
-#huberM([11,20,14,15], 4, [2,2,4, 5], 0.00002, 20)
-#huberM(x = [11,20,14,15], k = 4, tol = 0.2, se = True)
