@@ -1,0 +1,165 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ù">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>robustbase_pkg package &#8212; robustbase_pkg 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="robustbase-pkg-package">
+<h1>robustbase_pkg package<a class="headerlink" href="#robustbase-pkg-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-robustbase_pkg.robustbase">
+<span id="robustbase-pkg-robustbase-module"></span><h2>robustbase_pkg.robustbase module<a class="headerlink" href="#module-robustbase_pkg.robustbase" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="robustbase_pkg.robustbase.huberM">
+<code class="descclassname">robustbase_pkg.robustbase.</code><code class="descname">huberM</code><span class="sig-paren">(</span><em>x</em>, <em>k=1.5</em>, <em>weights=None</em>, <em>tol=1e-06</em>, <em>mu=None</em>, <em>s=None</em>, <em>se=False</em>, <em>warn0scale=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/robustbase_pkg/robustbase.html#huberM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#robustbase_pkg.robustbase.huberM" title="Permalink to this definition">¶</a></dt>
+<dd><p>(Generalized) Huber M-estimator of location with MAD scale.
+:param x: numeric vector.
+:param k: positive factor; the algorithm winsorizes at k standard deviations.
+:param weights: numeric vector of non-negative weights of same length as x, or None.
+:param tol: convergence tolerance.
+:param mu: initial location estimator.
+:param s: scale estimator held constant through the iterations.
+:param se: logical indicating if the standard error should be computed and returned (as SE component). Currently only available when weights is None.
+:param warn0scale: logical; if True, and s is 0 and len(x) &gt; 1, this will be warned about.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="robustbase_pkg.robustbase.mad">
+<code class="descclassname">robustbase_pkg.robustbase.</code><code class="descname">mad</code><span class="sig-paren">(</span><em>x</em>, <em>center=None</em>, <em>constant=1.4826</em>, <em>na_rm=False</em>, <em>low=False</em>, <em>high=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/robustbase_pkg/robustbase.html#mad"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#robustbase_pkg.robustbase.mad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the median absolute deviation, i.e., the (lo-/hi-) median of the absolute deviations from the median, and (by default) adjust by a factor for asymptotically normal consistency.
+:param x: numeric vector.
+:param center: optionally, the centre: defaults to the median.
+:param constant: scale factor.
+:param na_rm: if True then NaN values are stripped from x before computation takes place.
+:param low: if True, compute the ‘lo-median’, i.e., for even sample size, do not average the two middle values, but take the smaller one.
+:param high: if True, compute the ‘hi-median’, i.e., take the larger of the two middle values for even sample size.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="robustbase_pkg.robustbase.sumU">
+<code class="descclassname">robustbase_pkg.robustbase.</code><code class="descname">sumU</code><span class="sig-paren">(</span><em>x</em>, <em>weights</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/robustbase_pkg/robustbase.html#sumU"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#robustbase_pkg.robustbase.sumU" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate weighted sum
+:param x: numeric vector.
+:param weights: numeric vector of weights; of the same length as x.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="robustbase_pkg.robustbase.tauHuber">
+<code class="descclassname">robustbase_pkg.robustbase.</code><code class="descname">tauHuber</code><span class="sig-paren">(</span><em>x</em>, <em>mu</em>, <em>k=1.5</em>, <em>s=None</em>, <em>resid=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/robustbase_pkg/robustbase.html#tauHuber"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#robustbase_pkg.robustbase.tauHuber" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate correction factor Tau for the variance of Huber-M-Estimators.
+:param x: numeric vector.
+:param mu: location estimator.
+:param k: tuning parameter of Huber Psi-function.
+:param s: scale estimator held constant through the iterations.
+:param resid: the value of (x - mu)/s .</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="robustbase_pkg.robustbase.wgtHighMedian">
+<code class="descclassname">robustbase_pkg.robustbase.</code><code class="descname">wgtHighMedian</code><span class="sig-paren">(</span><em>x</em>, <em>weights=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/robustbase_pkg/robustbase.html#wgtHighMedian"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#robustbase_pkg.robustbase.wgtHighMedian" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the weighted Hi-Median of x.
+:param x: numeric vector
+:type x: list
+:param weights: numeric vector of weights; of the same length as x.
+:type weights: list
+:return: the weighted Hi-Median of x.
+:rtype: integer</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-robustbase_pkg">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-robustbase_pkg" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">robustbase_pkg</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="module.html">module package</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Alberto Bellumat.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      
+      |
+      <a href="_sources/robustbase_pkg.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
