@@ -6,9 +6,14 @@
 Robustbase package
 ==========================================
 
-Start here:
+API of robustbase package for python
 
 .. toctree::
    :maxdepth: 4
 
-   module
+Functions
+
+.. automodule:: robustbase
+    :members:
+    :undoc-members:
+    :show-inheritance:
