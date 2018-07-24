@@ -55,8 +55,7 @@ def wgtHighMedian(x, weights=None):
 
 # function for mad (median absolute deviation)
 def mad(x, center=None, constant=1.4826, na_rm=False, low=False, high=False):
-    """Compute the median absolute deviation, i.e., the (lo-/hi-) median of the absolute deviations from the median, 
-    and (by default) adjust by a factor for asymptotically normal consistency.
+    """Compute the median absolute deviation, i.e., the (lo-/hi-) median of the absolute deviations from the median, and (by default) adjust by a factor for asymptotically normal consistency.
     :param x: numeric vector.
     :param center: optionally, the centre: defaults to the median.
     :param constant: scale factor.
