@@ -1,8 +1,6 @@
 import numpy
 import warnings
 
-
-
 def wgtHighMedian(x, weights=None):
     """
 
@@ -306,3 +304,5 @@ class psi_func:
             The name of the ψ-function class.        
         """
         return str(self.name) + ' psi function'
+
+
