@@ -1,0 +1,1041 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>lmrob &#8212; lmrob 20180828 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Componet Description" href="../component_description.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="lmrob">
+<span id="id1"></span><h1>lmrob<a class="headerlink" href="#lmrob" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-lmrob"></span><div class="section" id="id2">
+<h2>lmrob<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+</div>
+<dl class="function">
+<dt id="lmrob.lmrob">
+<code class="descclassname">lmrob.</code><code class="descname">lmrob</code><span class="sig-paren">(</span><em>formula=''</em>, <em>data={}</em>, <em>subset=None</em>, <em>weights=array([]</em>, <em>dtype=float64)</em>, <em>na_action='drop'</em>, <em>method=''</em>, <em>model=True</em>, <em>return_x=True</em>, <em>return_y=True</em>, <em>singular_ok=True</em>, <em>contrasts={}</em>, <em>offset=array([]</em>, <em>dtype=float64)</em>, <em>control=None</em>, <em>init={}</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lmrob.lmrob" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes fast MM-type estimators for linear (regression) models  and
+returns a dictionary object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>formula</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">A symbolic description of the model to be fit.</p>
+</dd>
+<dt><strong>data</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
+<dd><p class="first last">An optional data frame, dict containing the variables in the model.</p>
+</dd>
+<dt><strong>subset: array_like</strong></dt>
+<dd><p class="first last">An optional vector specifying a subset of observations to be used in the fitting
+process.</p>
+</dd>
+<dt><strong>weights: array_like</strong></dt>
+<dd><p class="first last">An optional vector of weights to be used in the fitting process (in addition to the
+robustness weights computed in the fitting process).</p>
+</dd>
+<dt><strong>na_action: str</strong></dt>
+<dd><p class="first last">A function which indicates what should happen when the data contain nan. The
+default is set by the na_action setting of options, and is na_fail if that is
+unset. The “factory-fresh”   default is na_omit. Another possible value is None,
+no action. Value na_exclude can be useful.</p>
+</dd>
+<dt><strong>method: str</strong></dt>
+<dd><p class="first last">string specifying the estimator-chain. “MM” is interpreted as SM.
+See Notes, notably the currently recommended setting = “KS2014”.</p>
+</dd>
+<dt><strong>model, return_x, return_y: bool.</strong></dt>
+<dd><p class="first last">If True the corresponding components of  the fit (the model frame, the model
+matrix, the response) are returned.</p>
+</dd>
+<dt><strong>singular_ok: bool</strong></dt>
+<dd><p class="first last">If False (the default in S but not in R) a singular fit is an error.</p>
+</dd>
+<dt><strong>contrasts: dict</strong></dt>
+<dd><p class="first last">An optional list. See the contrasts.arg of model.matrix.default.</p>
+</dd>
+<dt><strong>offset: array_like</strong></dt>
+<dd><p class="first last">This can be used to specify an a priori known component to be included in the
+linear predictor during fitting. An offset term can be included in the formula
+instead or as well, and if both are specified their sum is used.</p>
+</dd>
+<dt><strong>control: object</strong></dt>
+<dd><p class="first last">Instances of class LmrobControl.</p>
+</dd>
+<dt><strong>init: dict</strong></dt>
+<dd><p class="first last">An optional argument to specify or supply the initial estimate. <em>See Notes</em>.</p>
+</dd>
+<dt><strong>kwargs:</strong></dt>
+<dd><p class="first last">additional arguments can be used to specify control parameters directly instead
+of (but not in addition to!) via control.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>coefficients: array_like</strong></dt>
+<dd><p class="first last">The estimate of the coefficient vector</p>
+</dd>
+<dt><strong>scale:</strong></dt>
+<dd><p class="first last">The scale as used in the M estimator.</p>
+</dd>
+<dt><strong>residuals: array_like</strong></dt>
+<dd><p class="first last">Residuals associated with the estimator.</p>
+</dd>
+<dt><strong>converged: bool</strong></dt>
+<dd><p class="first last">True if the IRWLS iterations have converged.</p>
+</dd>
+<dt><strong>iter: int</strong></dt>
+<dd><p class="first last">Number of IRWLS iterations</p>
+</dd>
+<dt><strong>rweights: array_like</strong></dt>
+<dd><p class="first last">The “robustness weights” ψ(r i /S)/(r i /S).</p>
+</dd>
+<dt><strong>fitted_values: array_like</strong></dt>
+<dd><p class="first last">Fitted values associated with the estimator.</p>
+</dd>
+<dt><strong>init: dict</strong></dt>
+<dd><p class="first last">A similar dict that contains the results of intermediate estimates.</p>
+</dd>
+<dt><strong>rank: int</strong></dt>
+<dd><p class="first last">the numeric rank of the fitted linear model.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LmrobControl</span></code>, <a class="reference internal" href="#lmrob.lmrob_S" title="lmrob.lmrob_S"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lmrob_S</span></code></a>, <a class="reference internal" href="#lmrob.lmrob_M_S" title="lmrob.lmrob_M_S"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lmrob_M_S</span></code></a>, <a class="reference internal" href="#lmrob.lmrob_fit" title="lmrob.lmrob_fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lmrob_fit</span></code></a></p>
+</div>
+<p class="rubric">Notes</p>
+<dl class="docutils">
+<dt><strong>Overview</strong>:</dt>
+<dd>This function computes an MM-type regression estimator as described in
+Yohai (1987) and Koller and Stahel (2011). By default it uses a bi-square
+redescending score function, and it returns a highly robust and highly
+efficient estimator (with 50% breakdown point and 95% asymptotic
+efficiency for normal errors). The computation is carried out by a call
+to lmrob.fit(). The argument setting of lmrob.control is provided to set
+alternative defaults as suggested in Koller and Stahel (2011)
+(setting=”KS2011”; now do use its extension setting=”KS2014”).
+For further details, see lmrob_control.</dd>
+<dt><strong>Initial Estimator</strong> <code class="docutils literal notranslate"><span class="pre">init</span></code>:</dt>
+<dd>The initial estimator may be specified using the argument init. This
+can either be a string, a function or a list. A string can be used to
+specify built in internal estimators (currently S and M-S, see See also
+below). A function taking arguments x, y, control, mf
+(where mf stands for model.frame) and returning a list containing at least
+the initial coefficients as coefficients and the initial scale estimate
+scale. Or a list giving the initial coefficients and scale as coefficients
+and scale. See also Examples. Note that if the init argument is a function
+or list, the method argument must not contain the initial estimator, e.g.,
+use MDM instead of SMDM.
+The default, equivalent to init = “S”, uses as initial estimator an
+S-estimator (Rousseeuw and Yohai, 1984) which is computed using the
+Fast-S algorithm of Salibian-Barrera and Yohai (2006), calling lmrob.S().
+That function, since March 2012, by default uses nonsingular subsampling
+which makes the Fast-S algorithm feasible for categorical data as well,
+see Koller (2012). Note that convergence problems may still show up as
+warnings, e.g.,S refinements did not converge (to refine.tol=1e-07) in
+200 (= k.max) steps and often can simply be remedied by increasing
+(i.e. weakening) refine.tol or increasing the allowed number of iterations
+k.max, see lmrob.control.</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">lmrob</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">rpy2.robjects.packages</span> <span class="k">import</span> <span class="n">importr</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">rpy2.robjects</span> <span class="k">import</span> <span class="n">pandas2ri</span><span class="p">,</span> <span class="n">r</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">rpy2.robjects.numpy2ri</span> <span class="k">as</span> <span class="nn">rpyn</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stackloss</span> <span class="o">=</span> <span class="n">r</span><span class="p">(</span><span class="s2">&quot;stackloss&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;AirFlow&quot;</span> <span class="p">:</span> <span class="n">rpyn</span><span class="o">.</span><span class="n">ri2py</span><span class="p">(</span><span class="n">stackloss</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="s2">&quot;Air.Flow&quot;</span><span class="p">)),</span>
+<span class="gp">... </span>        <span class="s2">&quot;WaterTemp&quot;</span> <span class="p">:</span> <span class="n">rpyn</span><span class="o">.</span><span class="n">ri2py</span><span class="p">(</span><span class="n">stackloss</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="s2">&quot;Water.Temp&quot;</span><span class="p">)),</span>
+<span class="gp">... </span>        <span class="s2">&quot;AcidConc&quot;</span> <span class="p">:</span> <span class="n">rpyn</span><span class="o">.</span><span class="n">ri2py</span><span class="p">(</span><span class="n">stackloss</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="s2">&quot;Acid.Conc.&quot;</span><span class="p">)),</span>
+<span class="gp">... </span>        <span class="s2">&quot;stack_loss&quot;</span> <span class="p">:</span> <span class="n">rpyn</span><span class="o">.</span><span class="n">ri2py</span><span class="p">(</span><span class="n">stackloss</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="s2">&quot;stack.loss&quot;</span><span class="p">))</span>
+<span class="gp">... </span>     <span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;stack_loss ~ AirFlow + WaterTemp + AcidConc&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># S Method</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m0</span> <span class="o">=</span> <span class="n">lmrob</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;S&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="lmrob.lmrob_fit">
+<code class="descclassname">lmrob.</code><code class="descname">lmrob_fit</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>control</em>, <em>init</em><span class="sig-paren">)</span><a class="headerlink" href="#lmrob.lmrob_fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute MM-type estimators of regression: An S-estimator is used as starting value, and an M-
+estimator with fixed scale and redescending psi-function is used from there. Optionally a D-step
+(Design Adaptive Scale estimate) as well as a second M-step is calculated. Returns a dictionary
+object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>x: array_like</strong></dt>
+<dd><p class="first last">design matrix (n × p) typically including a column of 1s for the intercept.</p>
+</dd>
+<dt><strong>y: array_like</strong></dt>
+<dd><p class="first last">numeric response vector (of length n).</p>
+</dd>
+<dt><strong>control: object</strong></dt>
+<dd><p class="first last">An instance of the LmrobControl Class</p>
+</dd>
+<dt><strong>init: dict</strong></dt>
+<dd><p class="first last">Optional list of initial estimates. <em>See Notes.</em></p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>fitted_values: array_like</strong></dt>
+<dd><p class="first last">Xβ, i.e., <code class="docutils literal notranslate"><span class="pre">X.dot(coefficients)</span></code></p>
+</dd>
+<dt><strong>residuals: array_like</strong></dt>
+<dd><p class="first last">the raw residuals, <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">-</span> <span class="pre">fitted_values</span></code></p>
+</dd>
+<dt><strong>rweights: array_like</strong></dt>
+<dd><p class="first last">robustness weights derived from the final M-estimator residuals (even when not
+converged).</p>
+</dd>
+<dt><strong>rank: int</strong></dt>
+<dd><p class="first last">degree_freedom n - rank</p>
+</dd>
+<dt><strong>coefficients: array_like</strong></dt>
+<dd><p class="first last">estimated regression coefficient vector.</p>
+</dd>
+<dt><strong>scale: float</strong></dt>
+<dd><p class="first last">the robustly estimated error standard deviation</p>
+</dd>
+<dt><strong>cov: array_like</strong></dt>
+<dd><p class="first last">variance-covariance matrix of coefficients, if the RWLS iterations have con-
+verged (and control.cov is not “none”).</p>
+</dd>
+<dt><strong>control: object</strong></dt>
+<dd></dd>
+<dt><strong>iter: int</strong></dt>
+<dd></dd>
+<dt><strong>converged: bool</strong></dt>
+<dd><p class="first last">boolean indicating if the RWLS iterations have converged.</p>
+</dd>
+<dt><strong>init: dict</strong></dt>
+<dd><p class="first last">A similar dict that contains the results of intermediate estimates (not for MM-
+estimates).</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#module-lmrob" title="lmrob"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lmrob</span></code></a>, <a class="reference internal" href="#lmrob.lmrob__M__fit" title="lmrob.lmrob__M__fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lmrob__M__fit</span></code></a>, <a class="reference internal" href="#lmrob.lmrob__D__fit" title="lmrob.lmrob__D__fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lmrob__D__fit</span></code></a>, <a class="reference internal" href="#lmrob.lmrob_S" title="lmrob.lmrob_S"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lmrob_S</span></code></a></p>
+</div>
+<p class="rubric">Notes</p>
+<p>This function is the basic fitting function for MM-type estimation, called by lmrob and typically
+not to be used on its own.
+If given, init must be a list of initial estimates containing at least the initial coefficients and scale
+as coefficients and scale. Otherwise it calls <code class="docutils literal notranslate"><span class="pre">lmrob_S(..)</span></code> and uses it as initial estimator.</p>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">lmrob</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">rpy2.robjects.packages</span> <span class="k">import</span> <span class="n">importr</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">rpy2.robjects</span> <span class="k">import</span> <span class="n">pandas2ri</span><span class="p">,</span> <span class="n">r</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">rpy2.robjects.numpy2ri</span> <span class="k">as</span> <span class="nn">rpyn</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stackloss</span> <span class="o">=</span> <span class="n">r</span><span class="p">(</span><span class="s2">&quot;stackloss&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;AirFlow&quot;</span><span class="p">:</span> <span class="n">rpyn</span><span class="o">.</span><span class="n">ri2py</span><span class="p">(</span><span class="n">stackloss</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="s2">&quot;Air.Flow&quot;</span><span class="p">)),</span>
+<span class="gp">... </span>        <span class="s2">&quot;WaterTemp&quot;</span><span class="p">:</span> <span class="n">rpyn</span><span class="o">.</span><span class="n">ri2py</span><span class="p">(</span><span class="n">stackloss</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="s2">&quot;Water.Temp&quot;</span><span class="p">)),</span>
+<span class="gp">... </span>        <span class="s2">&quot;AcidConc&quot;</span><span class="p">:</span> <span class="n">rpyn</span><span class="o">.</span><span class="n">ri2py</span><span class="p">(</span><span class="n">stackloss</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="s2">&quot;Acid.Conc.&quot;</span><span class="p">)),</span>
+<span class="gp">... </span>        <span class="s2">&quot;stack_loss&quot;</span><span class="p">:</span> <span class="n">rpyn</span><span class="o">.</span><span class="n">ri2py</span><span class="p">(</span><span class="n">stackloss</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="s2">&quot;stack.loss&quot;</span><span class="p">))</span>
+<span class="gp">... </span>       <span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;stack_loss ~ AirFlow + WaterTemp + AcidConc&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Y</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span> <span class="n">patsy</span><span class="o">.</span><span class="n">dmatrices</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">NA_action</span><span class="o">=</span><span class="s2">&quot;drop&quot;</span><span class="p">,</span>
+<span class="gp">... </span>                       <span class="n">return_type</span><span class="o">=</span><span class="s1">&#39;matrix&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">control</span> <span class="o">=</span> <span class="n">LmrobControl</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m0</span> <span class="o">=</span> <span class="n">lmrob_fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">control</span><span class="o">=</span><span class="n">control</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">coefficients</span> <span class="o">=</span> <span class="n">m0</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;coefficients&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">residuals</span> <span class="o">=</span> <span class="n">m0</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;residuals&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scale</span> <span class="o">=</span> <span class="n">m0</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;scale&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">converged</span> <span class="o">=</span> <span class="n">m0</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;converged&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="lmrob.lmrob_S">
+<code class="descclassname">lmrob.</code><code class="descname">lmrob_S</code><span class="sig-paren">(</span><em>x_</em>, <em>y_</em>, <em>control</em>, <em>only_scale=False</em><span class="sig-paren">)</span><a class="headerlink" href="#lmrob.lmrob_S" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes an S-estimator for linear regression, using the “fast S” algorithm and
+returns a dictionary object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>x_: array_like</strong></dt>
+<dd><blockquote class="first">
+<div><p>Design matrix (n × p)</p>
+</div></blockquote>
+<dl class="last docutils">
+<dt><a href="#id3"><span class="problematic" id="id4">y_</span></a>: array_like</dt>
+<dd><p class="first last">Numeric vector of responses (or residuals for only_scale=True).</p>
+</dd>
+<dt>control: object</dt>
+<dd><p class="first last">Instances of class LmrobControl.</p>
+</dd>
+<dt>only_scale: bool</dt>
+<dd><p class="first last">Boolean indicating if only the scale of <code class="docutils literal notranslate"><span class="pre">y</span></code> should be computed. In this case, <code class="docutils literal notranslate"><span class="pre">y</span></code>
+will typically contain residuals.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>coefficients: array_like</strong></dt>
+<dd><blockquote class="first">
+<div><p>numeric vector (length p) of S-regression coefficient estimates.</p>
+</div></blockquote>
+<dl class="last docutils">
+<dt>scale: float</dt>
+<dd><p class="first last">The S-scale residual estimate</p>
+</dd>
+<dt>fitted_values: array_like</dt>
+<dd><p class="first last">numeric vector (length n) of the fitted values.</p>
+</dd>
+<dt>residuals: array_like</dt>
+<dd><p class="first last">numeric vector (length n) of the residuals.</p>
+</dd>
+<dt>rweights: array_like</dt>
+<dd><p class="first last">numeric vector (length n) of the robustness weights.</p>
+</dd>
+<dt>k_iter: int</dt>
+<dd><p class="first last">(maximal) number of refinement iterations used.</p>
+</dd>
+<dt>converged: bool</dt>
+<dd><p class="first last">boolean indicating if all refinement iterations had converged.</p>
+</dd>
+<dt>control: object</dt>
+<dd><p class="first last">the same object as the control argument.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>This function is used by <code class="docutils literal notranslate"><span class="pre">lmrob_fit</span></code> and typically not to be used on its own (because an S-estimator
+has too low efficiency ‘on its own’).
+By default, the subsampling algorithm uses a customized LU decomposition which ensures a non
+singular subsample (if this is at all possible). This makes the Fast-S algorithm also feasible for
+categorical and mixed continuous-categorical data.
+One can revert to the old subsampling scheme by setting the parameter subsampling in control
+to “simple”.</p>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">lmrob</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">rpy2.robjects.packages</span> <span class="k">import</span> <span class="n">importr</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">rpy2.robjects</span> <span class="k">import</span> <span class="n">pandas2ri</span><span class="p">,</span> <span class="n">r</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">rpy2.robjects.numpy2ri</span> <span class="k">as</span> <span class="nn">rpyn</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stackloss</span> <span class="o">=</span> <span class="n">r</span><span class="p">(</span><span class="s2">&quot;stackloss&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;AirFlow&quot;</span> <span class="p">:</span> <span class="n">rpyn</span><span class="o">.</span><span class="n">ri2py</span><span class="p">(</span><span class="n">stackloss</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="s2">&quot;Air.Flow&quot;</span><span class="p">)),</span>
+<span class="gp">... </span>        <span class="s2">&quot;WaterTemp&quot;</span> <span class="p">:</span> <span class="n">rpyn</span><span class="o">.</span><span class="n">ri2py</span><span class="p">(</span><span class="n">stackloss</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="s2">&quot;Water.Temp&quot;</span><span class="p">)),</span>
+<span class="gp">... </span>        <span class="s2">&quot;AcidConc&quot;</span> <span class="p">:</span> <span class="n">rpyn</span><span class="o">.</span><span class="n">ri2py</span><span class="p">(</span><span class="n">stackloss</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="s2">&quot;Acid.Conc.&quot;</span><span class="p">)),</span>
+<span class="gp">... </span>        <span class="s2">&quot;stack_loss&quot;</span> <span class="p">:</span> <span class="n">rpyn</span><span class="o">.</span><span class="n">ri2py</span><span class="p">(</span><span class="n">stackloss</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="s2">&quot;stack.loss&quot;</span><span class="p">))</span>
+<span class="gp">... </span>     <span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;stack_loss ~ AirFlow + WaterTemp + AcidConc&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Y</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span> <span class="n">patsy</span><span class="o">.</span><span class="n">dmatrices</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">NA_action</span><span class="o">=</span><span class="s2">&quot;drop&quot;</span><span class="p">,</span> <span class="n">return_type</span><span class="o">=</span><span class="s1">&#39;matrix&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">control</span> <span class="o">=</span> <span class="n">LmrobControl</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m0</span> <span class="o">=</span> <span class="n">lmrob_S</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">control</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">coefficients</span> <span class="o">=</span> <span class="n">m0</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;coefficients&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">residuals</span> <span class="o">=</span> <span class="n">m0</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;residuals&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scale</span> <span class="o">=</span> <span class="n">m0</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;scale&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">converged</span> <span class="o">=</span> <span class="n">m0</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;converged&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">k_iter</span> <span class="o">=</span> <span class="n">m0</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;k_iter&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fitted_values</span> <span class="o">=</span> <span class="n">m0</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;fitted_values&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rweights</span> <span class="o">=</span> <span class="n">m0</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;rweights&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="lmrob.lmrob_M_S">
+<code class="descclassname">lmrob.</code><code class="descname">lmrob_M_S</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>control</em>, <em>mf</em><span class="sig-paren">)</span><a class="headerlink" href="#lmrob.lmrob_M_S" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes an M-S-estimator for linear regression using the “M-S” algorithm.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>x: array_like</strong></dt>
+<dd><p class="first last">Design matrix (n × p)</p>
+</dd>
+<dt><strong>y: array_like</strong></dt>
+<dd><p class="first last">Numeric vector of responses (or residuals for only_scale=True).</p>
+</dd>
+<dt><strong>control: object</strong></dt>
+<dd><p class="first last">Instances of class LmrobControl.</p>
+</dd>
+<dt><strong>mf: array_like</strong></dt>
+<dd><p class="first last">a model matrix as returned by model_frame.</p>
+</dd>
+<dt><strong>Returns</strong></dt>
+<dd></dd>
+<dt><strong>coefficients: array_like</strong></dt>
+<dd><p class="first last">Numeric vector (length p) of M-S-regression coefficient estimates.</p>
+</dd>
+<dt><strong>scale: float</strong></dt>
+<dd><p class="first last">The M-S-scale residual estimate</p>
+</dd>
+<dt><strong>residuals: array_like</strong></dt>
+<dd><p class="first last">numeric vector (legnth n) of the residuals.</p>
+</dd>
+<dt><strong>rweights: array_like</strong></dt>
+<dd><p class="first last">numeric vector (length n) of the robustness weights.</p>
+</dd>
+<dt><strong>control: object</strong></dt>
+<dd><p class="first last">the same as the control argument.</p>
+</dd>
+<dt><strong>converged: bool</strong></dt>
+<dd><p class="first last">Convergence status (always True), needed for lmrob.fit.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#module-lmrob" title="lmrob"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lmrob</span></code></a></p>
+</div>
+<p class="rubric">Notes</p>
+<p>This function is used by lmrob and not intended to be used on its own (because an M-S-estimator
+has too low efficiency ‘on its own’).
+An M-S estimator is a combination of an S-estimator for the continuous variables and an L1-
+estimator (i.e. an M-estimator with ψ(t) = sign(t)) for the categorical variables.
+The S-estimator is estimated using a subsampling algorithm. If the model includes interactions
+between categorical (factor) and continuous variables, the subsampling algorithm might fail. In
+this case, one can choose to assign the interaction to the categorical side of variables rather than
+to the continuous side.</p>
+<p>Note that the return status converged does not refer to the actual convergence status. The algorithm
+used does not guarantee convergence and thus true convergence is almost never reached. This is,
+however, not a problem if the estimate is only used as initial estimate part of an MM or SMDM
+estimate.</p>
+<p>The algorithm sometimes produces the warning message “Skipping design matrix equilibration
+(dgeequ): row ?? is exactly zero.”. This is just an artifact of the algorithm and can be ignored
+safely.</p>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">lmrob</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">rpy2.robjects.packages</span> <span class="k">import</span> <span class="n">importr</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">rpy2.robjects</span> <span class="k">import</span> <span class="n">pandas2ri</span><span class="p">,</span> <span class="n">r</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">rpy2.robjects.numpy2ri</span> <span class="k">as</span> <span class="nn">rpyn</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stackloss</span> <span class="o">=</span> <span class="n">r</span><span class="p">(</span><span class="s2">&quot;stackloss&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;AirFlow&quot;</span> <span class="p">:</span> <span class="n">rpyn</span><span class="o">.</span><span class="n">ri2py</span><span class="p">(</span><span class="n">stackloss</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="s2">&quot;Air.Flow&quot;</span><span class="p">)),</span>
+<span class="gp">... </span>        <span class="s2">&quot;WaterTemp&quot;</span> <span class="p">:</span> <span class="n">rpyn</span><span class="o">.</span><span class="n">ri2py</span><span class="p">(</span><span class="n">stackloss</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="s2">&quot;Water.Temp&quot;</span><span class="p">)),</span>
+<span class="gp">... </span>        <span class="s2">&quot;AcidConc&quot;</span> <span class="p">:</span> <span class="n">rpyn</span><span class="o">.</span><span class="n">ri2py</span><span class="p">(</span><span class="n">stackloss</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="s2">&quot;Acid.Conc.&quot;</span><span class="p">)),</span>
+<span class="gp">... </span>        <span class="s2">&quot;stack_loss&quot;</span> <span class="p">:</span> <span class="n">rpyn</span><span class="o">.</span><span class="n">ri2py</span><span class="p">(</span><span class="n">stackloss</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="s2">&quot;stack.loss&quot;</span><span class="p">))</span>
+<span class="gp">... </span>     <span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;stack_loss ~ AirFlow + WaterTemp + AcidConc&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mf_dict</span> <span class="o">=</span> <span class="n">model_frame</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">[],</span> <span class="s1">&#39;drop&#39;</span><span class="p">,</span> <span class="p">[])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Y</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span> <span class="n">patsy</span><span class="o">.</span><span class="n">dmatrices</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">NA_action</span><span class="o">=</span><span class="s2">&quot;drop&quot;</span><span class="p">,</span> <span class="n">return_type</span><span class="o">=</span><span class="s1">&#39;matrix&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">control</span> <span class="o">=</span> <span class="n">LmrobControl</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m0</span> <span class="o">=</span> <span class="n">lmrob_M_S</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">control</span><span class="p">,</span> <span class="n">mf_dict</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">coefficients</span> <span class="o">=</span> <span class="n">m0</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;coefficients&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">residuals</span> <span class="o">=</span> <span class="n">m0</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;residuals&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scale</span> <span class="o">=</span> <span class="n">m0</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;scale&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="lmrob.lmrob__D__fit">
+<code class="descclassname">lmrob.</code><code class="descname">lmrob__D__fit</code><span class="sig-paren">(</span><em>obj</em>, <em>x=array([]</em>, <em>dtype=float64)</em>, <em>control=None</em>, <em>method=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lmrob.lmrob__D__fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function calculates a Design Adaptive Scale estimate for a given MM-estimate. This is sup-
+posed to be a part of a chain of estimates like SMD or SMDM. Returns a dictionart object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>obj: dict</strong></dt>
+<dd><p class="first last">based on which the estimate is to be calculated.</p>
+</dd>
+<dt><strong>x: array_like</strong></dt>
+<dd><p class="first last">The design matrix; if missing, the method tries to get it from <code class="docutils literal notranslate"><span class="pre">obj.get(&quot;x&quot;)</span></code>.</p>
+</dd>
+<dt><strong>control: object</strong></dt>
+<dd><p class="first last">Instances of class LmrobControl.</p>
+</dd>
+<dt><strong>method: str</strong></dt>
+<dd><p class="first last">(optional) the method used for obj computation.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>scale: float</strong></dt>
+<dd><p class="first last">The Design Adaptive Scale estimate</p>
+</dd>
+<dt><strong>converged: bool</strong></dt>
+<dd><p class="first last">True if the scale calculation converged, False other.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#lmrob.lmrob_fit" title="lmrob.lmrob_fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lmrob_fit</span></code></a>, <a class="reference internal" href="#module-lmrob" title="lmrob"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lmrob</span></code></a></p>
+</div>
+<p class="rubric">Notes</p>
+<p>This function is used by <code class="docutils literal notranslate"><span class="pre">lmrob_fit</span></code> and typically not to be used on its own. Note that <code class="docutils literal notranslate"><span class="pre">lmrob_fit()</span></code>
+specifies control potentially differently than the default, but does use the default for method.</p>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">lmrob</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">rpy2.robjects.packages</span> <span class="k">import</span> <span class="n">importr</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">rpy2.robjects</span> <span class="k">import</span> <span class="n">pandas2ri</span><span class="p">,</span> <span class="n">r</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">rpy2.robjects.numpy2ri</span> <span class="k">as</span> <span class="nn">rpyn</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stackloss</span> <span class="o">=</span> <span class="n">r</span><span class="p">(</span><span class="s2">&quot;stackloss&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;AirFlow&quot;</span><span class="p">:</span> <span class="n">rpyn</span><span class="o">.</span><span class="n">ri2py</span><span class="p">(</span><span class="n">stackloss</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="s2">&quot;Air.Flow&quot;</span><span class="p">)),</span>
+<span class="gp">... </span>        <span class="s2">&quot;WaterTemp&quot;</span><span class="p">:</span> <span class="n">rpyn</span><span class="o">.</span><span class="n">ri2py</span><span class="p">(</span><span class="n">stackloss</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="s2">&quot;Water.Temp&quot;</span><span class="p">)),</span>
+<span class="gp">... </span>        <span class="s2">&quot;AcidConc&quot;</span><span class="p">:</span> <span class="n">rpyn</span><span class="o">.</span><span class="n">ri2py</span><span class="p">(</span><span class="n">stackloss</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="s2">&quot;Acid.Conc.&quot;</span><span class="p">)),</span>
+<span class="gp">... </span>        <span class="s2">&quot;stack_loss&quot;</span><span class="p">:</span> <span class="n">rpyn</span><span class="o">.</span><span class="n">ri2py</span><span class="p">(</span><span class="n">stackloss</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="s2">&quot;stack.loss&quot;</span><span class="p">))</span>
+<span class="gp">... </span>     <span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;stack_loss ~ AirFlow + WaterTemp + AcidConc&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Y</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span> <span class="n">patsy</span><span class="o">.</span><span class="n">dmatrices</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">NA_action</span><span class="o">=</span><span class="s2">&quot;drop&quot;</span><span class="p">,</span>
+<span class="gp">... </span>                       <span class="n">return_type</span><span class="o">=</span><span class="s1">&#39;matrix&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">control</span> <span class="o">=</span> <span class="n">LmrobControl</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">init</span> <span class="o">=</span> <span class="n">lmrob_S</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">control</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m0</span> <span class="o">=</span> <span class="n">lmrob__D__fit</span><span class="p">(</span><span class="n">init</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">control</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Getting the computed values</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">converged_py</span> <span class="o">=</span> <span class="n">m0</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;converged&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scale_py</span> <span class="o">=</span> <span class="n">m0</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;scale&quot;</span><span class="p">)</span> 
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="lmrob.lmrob__M__fit">
+<code class="descclassname">lmrob.</code><code class="descname">lmrob__M__fit</code><span class="sig-paren">(</span><em>x=array([]</em>, <em>dtype=float64)</em>, <em>y=array([]</em>, <em>dtype=float64)</em>, <em>beta_initial=array([]</em>, <em>dtype=float64)</em>, <em>scale=None</em>, <em>control=None</em>, <em>method=None</em>, <em>obj=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lmrob.lmrob__M__fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function performs RWLS iterations to find an M-estimator of regression. When started from
+an S-estimated beta.initial, this results in an MM-estimator. Returns a dictionary</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>x: array_like</strong></dt>
+<dd><p class="first last">design matrix (n × p) typically including a column of 1s for the intercept.</p>
+</dd>
+<dt><strong>y: array_like</strong></dt>
+<dd><p class="first last">numeric response vector (of length n).</p>
+</dd>
+<dt><strong>beta_initial: array_like</strong></dt>
+<dd><p class="first last">numeric vector (of length p) of initial estimate. Usually the result of an S-
+regression estimator.</p>
+</dd>
+<dt><strong>scale: float</strong></dt>
+<dd><p class="first last">robust residual scale estimate. Usually an S-scale estimator.</p>
+</dd>
+<dt><strong>control: object</strong></dt>
+<dd><p class="first last">Instances of class LmrobControl.</p>
+</dd>
+<dt><strong>obj: dict</strong></dt>
+<dd><p class="first last">If specified, this is typically used to set values for the
+other arguments.</p>
+</dd>
+<dt><strong>method: str</strong></dt>
+<dd><p class="first last">(optional) the method used for obj computation.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>coefficients: array_like</strong></dt>
+<dd><p class="first last">the M-estimator (or MM-estim.) of regression</p>
+</dd>
+<dt><strong>control:</strong></dt>
+<dd><p class="first last">the control obj input used</p>
+</dd>
+<dt><strong>scale: float</strong></dt>
+<dd><p class="first last">The residual scale estimate</p>
+</dd>
+<dt><strong>converged: bool</strong></dt>
+<dd><p class="first last">True if the RWLS iterations converged, False otherwise</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#lmrob.lmrob_fit" title="lmrob.lmrob_fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lmrob_fit</span></code></a>, <a class="reference internal" href="#module-lmrob" title="lmrob"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lmrob</span></code></a></p>
+</div>
+<p class="rubric">Notes</p>
+<p>This function is used by lmrob_fit and typically
+not to be used on its own.</p>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">lmrob</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">rpy2.robjects.packages</span> <span class="k">import</span> <span class="n">importr</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">rpy2.robjects</span> <span class="k">import</span> <span class="n">pandas2ri</span><span class="p">,</span> <span class="n">r</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">rpy2.robjects.numpy2ri</span> <span class="k">as</span> <span class="nn">rpyn</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stackloss</span> <span class="o">=</span> <span class="n">r</span><span class="p">(</span><span class="s2">&quot;stackloss&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;AirFlow&quot;</span><span class="p">:</span> <span class="n">rpyn</span><span class="o">.</span><span class="n">ri2py</span><span class="p">(</span><span class="n">stackloss</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="s2">&quot;Air.Flow&quot;</span><span class="p">)),</span>
+<span class="gp">... </span>        <span class="s2">&quot;WaterTemp&quot;</span><span class="p">:</span> <span class="n">rpyn</span><span class="o">.</span><span class="n">ri2py</span><span class="p">(</span><span class="n">stackloss</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="s2">&quot;Water.Temp&quot;</span><span class="p">)),</span>
+<span class="gp">... </span>        <span class="s2">&quot;AcidConc&quot;</span><span class="p">:</span> <span class="n">rpyn</span><span class="o">.</span><span class="n">ri2py</span><span class="p">(</span><span class="n">stackloss</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="s2">&quot;Acid.Conc.&quot;</span><span class="p">)),</span>
+<span class="gp">... </span>        <span class="s2">&quot;stack_loss&quot;</span><span class="p">:</span> <span class="n">rpyn</span><span class="o">.</span><span class="n">ri2py</span><span class="p">(</span><span class="n">stackloss</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="s2">&quot;stack.loss&quot;</span><span class="p">))</span>
+<span class="gp">... </span>     <span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;stack_loss ~ AirFlow + WaterTemp + AcidConc&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Y</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span> <span class="n">patsy</span><span class="o">.</span><span class="n">dmatrices</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">NA_action</span><span class="o">=</span><span class="s2">&quot;drop&quot;</span><span class="p">,</span>
+<span class="gp">... </span>                       <span class="n">return_type</span><span class="o">=</span><span class="s1">&#39;matrix&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">control</span> <span class="o">=</span> <span class="n">LmrobControl</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">init</span> <span class="o">=</span> <span class="n">lmrob_S</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">control</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">beta_inital</span> <span class="o">=</span> <span class="n">init</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;coefficients&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scale</span> <span class="o">=</span> <span class="n">init</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;scale&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m0</span> <span class="o">=</span> <span class="n">lmrob__M__fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">beta_inital</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span>
+<span class="gp">... </span>                   <span class="n">control</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;MM&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Getting the computed values</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">coefficients</span> <span class="o">=</span> <span class="n">m0</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;coefficients&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">residuals</span> <span class="o">=</span> <span class="n">m0</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;residuals&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scale</span> <span class="o">=</span> <span class="n">m0</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;scale&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">converged</span> <span class="o">=</span> <span class="n">m0</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;converged&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">iter</span> <span class="o">=</span> <span class="n">m0</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;iter&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="lmrob.lmrob_lar">
+<code class="descclassname">lmrob.</code><code class="descname">lmrob_lar</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>control=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lmrob.lmrob_lar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute MM-type estimators of regression: An S-estimator is used as starting value, and an M-
+estimator with fixed scale and redescending psi-function is used from there. Optionally a D-step
+(Design Adaptive Scale estimate) as well as a second M-step is calculated.
+Usage. Return a dictionary object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>x: array_like</strong></dt>
+<dd><p class="first last">Design matrix (n × p)</p>
+</dd>
+<dt><strong>y: array_like</strong></dt>
+<dd><p class="first last">Numeric vector of responses (or residuals for only_scale=True).</p>
+</dd>
+<dt><strong>control: object</strong></dt>
+<dd><p class="first last">Instances of class LmrobControl.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>fitted_values: array_like</strong></dt>
+<dd><p class="first last">Xβ, i.e., <code class="docutils literal notranslate"><span class="pre">X.dot(coefficients)</span></code>.</p>
+</dd>
+<dt><strong>residuals: array_like</strong></dt>
+<dd><p class="first last">the raw residuals, <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">-</span> <span class="pre">fitted_values</span></code></p>
+</dd>
+<dt><strong>rweights: array_like</strong></dt>
+<dd><p class="first last">robustness weights derived from the final M-estimator residuals (even when not
+converged).</p>
+</dd>
+<dt><strong>rank: int</strong></dt>
+<dd><p class="first last"><code class="docutils literal notranslate"><span class="pre">degree_freedom</span> <span class="pre">n</span> <span class="pre">-</span> <span class="pre">rank</span></code></p>
+</dd>
+<dt><strong>coefficients: array_like</strong></dt>
+<dd><p class="first last">estimated regression coefficient vector.</p>
+</dd>
+<dt><strong>scale: float</strong></dt>
+<dd><p class="first last">the robustly estimated error standard deviation.</p>
+</dd>
+<dt><strong>control: object</strong></dt>
+<dd><p class="first last">the same as the control argument.</p>
+</dd>
+<dt><strong>iter: bool</strong></dt>
+<dd><p class="first last">converged boolean indicating if the RWLS iterations have converged.</p>
+</dd>
+<dt><strong>init: dict</strong></dt>
+<dd><p class="first last">A similar dict that contains the results of intermediate estimates (not for MM-
+estimates).</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#module-lmrob" title="lmrob"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lmrob</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">lmrob..M..fit</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">lmrob..D..fit</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">lmrob.S</span></code></p>
+</div>
+<p class="rubric">Notes</p>
+<p>This function is the basic fitting function for MM-type estimation, called by lmrob and typically
+not to be used on its own.
+If given, init must be a list of initial estimates containing at least the initial coefficients and scale
+as coefficients and scale. Otherwise it calls lmrob.S(..) and uses it as initial estimator.</p>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">lmrob</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">rpy2.robjects.packages</span> <span class="k">import</span> <span class="n">importr</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">rpy2.robjects</span> <span class="k">import</span> <span class="n">pandas2ri</span><span class="p">,</span> <span class="n">r</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">rpy2.robjects.numpy2ri</span> <span class="k">as</span> <span class="nn">rpyn</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stackloss</span> <span class="o">=</span> <span class="n">r</span><span class="p">(</span><span class="s2">&quot;stackloss&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;AirFlow&quot;</span> <span class="p">:</span> <span class="n">rpyn</span><span class="o">.</span><span class="n">ri2py</span><span class="p">(</span><span class="n">stackloss</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="s2">&quot;Air.Flow&quot;</span><span class="p">)),</span>
+<span class="gp">... </span>        <span class="s2">&quot;WaterTemp&quot;</span> <span class="p">:</span> <span class="n">rpyn</span><span class="o">.</span><span class="n">ri2py</span><span class="p">(</span><span class="n">stackloss</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="s2">&quot;Water.Temp&quot;</span><span class="p">)),</span>
+<span class="gp">... </span>        <span class="s2">&quot;AcidConc&quot;</span> <span class="p">:</span> <span class="n">rpyn</span><span class="o">.</span><span class="n">ri2py</span><span class="p">(</span><span class="n">stackloss</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="s2">&quot;Acid.Conc.&quot;</span><span class="p">)),</span>
+<span class="gp">... </span>        <span class="s2">&quot;stack_loss&quot;</span> <span class="p">:</span> <span class="n">rpyn</span><span class="o">.</span><span class="n">ri2py</span><span class="p">(</span><span class="n">stackloss</span><span class="o">.</span><span class="n">rx2</span><span class="p">(</span><span class="s2">&quot;stack.loss&quot;</span><span class="p">))</span>
+<span class="gp">... </span>     <span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">formula</span> <span class="o">=</span> <span class="s1">&#39;stack_loss ~ AirFlow + WaterTemp + AcidConc&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mf_dict</span> <span class="o">=</span> <span class="n">model_frame</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">[],</span> <span class="s1">&#39;drop&#39;</span><span class="p">,</span> <span class="p">[])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Y</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span> <span class="n">patsy</span><span class="o">.</span><span class="n">dmatrices</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">NA_action</span><span class="o">=</span><span class="s2">&quot;drop&quot;</span><span class="p">,</span> <span class="n">return_type</span><span class="o">=</span><span class="s1">&#39;matrix&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">control</span> <span class="o">=</span> <span class="n">LmrobControl</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m0</span> <span class="o">=</span> <span class="n">lmrob_lar</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">control</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">coefficients</span> <span class="o">=</span> <span class="n">m0</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;coefficients&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">residuals</span> <span class="o">=</span> <span class="n">m0</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;residuals&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">scale</span> <span class="o">=</span> <span class="n">m0</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;scale&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-lmrob.utils">
+<span id="utils"></span><h1>utils<a class="headerlink" href="#module-lmrob.utils" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="lmrob.utils.huberM">
+<code class="descclassname">lmrob.utils.</code><code class="descname">huberM</code><span class="sig-paren">(</span><em>x</em>, <em>k=1.5</em>, <em>weights=None</em>, <em>tol=1e-06</em>, <em>mu=None</em>, <em>s=None</em>, <em>se=False</em>, <em>warn0scale=True</em><span class="sig-paren">)</span><a class="headerlink" href="#lmrob.utils.huberM" title="Permalink to this definition">¶</a></dt>
+<dd><p>(Generalized) Huber M-estimator of location with MAD scale.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">module</span><span class="o">.</span><span class="n">huberM</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">12</span><span class="p">])</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> (<em>list</em>) – numeric vector.</li>
+<li><strong>k</strong> (<em>float</em>) – positive factor; the algorithm winsorizes at k standard deviations.</li>
+<li><strong>weights</strong> (<em>list</em>) – numeric vector of non-negative weights of same length as x, or None.</li>
+<li><strong>tol</strong> (<em>float</em>) – convergence tolerance.</li>
+<li><strong>mu</strong> (<em>float</em>) – initial location estimator.</li>
+<li><strong>s</strong> (<em>float</em>) – scale estimator held constant through the iterations.</li>
+<li><strong>se</strong> (<em>bool</em>) – logical indicating if the standard error should be computed and returned (as SE component). Currently only available when weights is None.</li>
+<li><strong>warn0scale</strong> (<em>bool</em>) – logical; if True, and s is 0 and len(x) &gt; 1, this will be warned about.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The tuple (mu, s , it , se ) containing the location, scale parameters, number of iterations used and the se component.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">tuple</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="lmrob.utils.mad">
+<code class="descclassname">lmrob.utils.</code><code class="descname">mad</code><span class="sig-paren">(</span><em>x</em>, <em>center=None</em>, <em>constant=1.4826</em>, <em>na_rm=False</em>, <em>low=False</em>, <em>high=False</em><span class="sig-paren">)</span><a class="headerlink" href="#lmrob.utils.mad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the median absolute deviation, i.e., the (lo-/hi-) median of the absolute deviations from the median, and (by default) adjust by a factor for asymptotically normal consistency.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">module</span><span class="o">.</span><span class="n">mad</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">12</span><span class="p">])</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> (<em>list</em>) – numeric vector.</li>
+<li><strong>center</strong> (<em>float</em>) – optionally, the centre: defaults to the median.</li>
+<li><strong>constant</strong> (<em>float</em>) – scale factor.</li>
+<li><strong>na_rm</strong> (<em>bool</em>) – if True then NaN values are stripped from x before computation takes place.</li>
+<li><strong>low</strong> (<em>bool</em>) – if True, compute the ‘lo-median’, i.e., for even sample size, do not average the two middle values, but take the smaller one.</li>
+<li><strong>high</strong> (<em>bool</em>) – if True, compute the ‘hi-median’, i.e., take the larger of the two middle values for even sample size.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the median absolute deviation</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">float</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last">ValueError</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="lmrob.utils.psi_func">
+<em class="property">class </em><code class="descclassname">lmrob.utils.</code><code class="descname">psi_func</code><span class="sig-paren">(</span><em>rho</em>, <em>psi</em>, <em>wgt</em>, <em>Dpsi</em>, <em>Dwgt</em>, <em>tDefs</em>, <em>Erho</em>, <em>Epsi2</em>, <em>EDpsi</em>, <em>name</em>, <em>xtras</em><span class="sig-paren">)</span><a class="headerlink" href="#lmrob.utils.psi_func" title="Permalink to this definition">¶</a></dt>
+<dd><p>The class “psi_func” is used to store ψ (psi) functions for M-estimation. In particular, an object of the class contains ρ(x) (rho), its derivative ψ(x) (psi), the weight function ψ(x)/x, and ﬁrst derivative of ψ, Dpsi = ψ0(x)</p>
+<dl class="method">
+<dt id="lmrob.utils.psi_func.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>rho</em>, <em>psi</em>, <em>wgt</em>, <em>Dpsi</em>, <em>Dwgt</em>, <em>tDefs</em>, <em>Erho</em>, <em>Epsi2</em>, <em>EDpsi</em>, <em>name</em>, <em>xtras</em><span class="sig-paren">)</span><a class="headerlink" href="#lmrob.utils.psi_func.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Example of docstring on the __init__ method.</p>
+<p>The __init__ method may be documented in either the class level
+docstring, or as a docstring on the __init__ method itself.</p>
+<p>Either form is acceptable, but the two should not be mixed. Choose one
+convention to document the __init__ method and be consistent with it.</p>
+<dl class="docutils">
+<dt>Note:</dt>
+<dd>Do not include the <cite>self</cite> parameter in the <code class="docutils literal notranslate"><span class="pre">Args</span></code> section.</dd>
+<dt>Args:</dt>
+<dd>rho (function): the ρ() function. This is used to formulate the objective function; ρ() can be regarded as generalized negative log-likelihood.
+psi (function): ψ() is the derivative of ρ.
+wgt (function): The weight function ψ(x)/x.
+Dpsi (function): the derivative of ψ, Dpsi(x) = psi0(x).
+Dwgt (function): the derivative of the weight function.
+tDefs (list): named numeric vector oftuning parameterDefault values.
+Epsi2 (function): The function for computing E[ψ2(X)] when X is standard normal.
+EDpsi (function): The function for computing E[ψ0(X)] when X is standard normal.
+name (string): Name of ψ-function used for printing.
+xtras (string): Potentially further information.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="lmrob.utils.sumU">
+<code class="descclassname">lmrob.utils.</code><code class="descname">sumU</code><span class="sig-paren">(</span><em>x</em>, <em>weights</em><span class="sig-paren">)</span><a class="headerlink" href="#lmrob.utils.sumU" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate weighted sum</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">module</span><span class="o">.</span><span class="n">sumU</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">12</span><span class="p">],</span> <span class="p">[</span><span class="mi">52</span><span class="p">,</span><span class="mi">44</span><span class="p">,</span><span class="mi">82</span><span class="p">,</span><span class="mi">24</span><span class="p">,</span><span class="mi">68</span><span class="p">,</span><span class="mi">42</span><span class="p">,</span><span class="mi">82</span><span class="p">,</span><span class="mi">20</span><span class="p">])</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> (<em>list</em>) – numeric vector.</li>
+<li><strong>weights</strong> (<em>list</em>) – numeric vector of weights; of the same length as x.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The weighted sum.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">float</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last">ValueError</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="lmrob.utils.tauHuber">
+<code class="descclassname">lmrob.utils.</code><code class="descname">tauHuber</code><span class="sig-paren">(</span><em>x</em>, <em>mu</em>, <em>k=1.5</em>, <em>s=None</em>, <em>resid=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lmrob.utils.tauHuber" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate correction factor Tau for the variance of Huber-M-Estimators.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">module</span><span class="o">.</span><span class="n">tauHuber</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">12</span><span class="p">])</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> (<em>list</em>) – numeric vector.</li>
+<li><strong>mu</strong> (<em>float</em>) – location estimator.</li>
+<li><strong>k</strong> (<em>float</em>) – tuning parameter of Huber Psi-function.</li>
+<li><strong>s</strong> (<em>float</em>) – scale estimator held constant through the iterations.</li>
+<li><strong>resid</strong> (<em>float</em>) – the value of (x - mu)/s .</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The correction factor Tau for the variance of Huber-M-Estimators.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">float</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="lmrob.utils.wgtHighMedian">
+<code class="descclassname">lmrob.utils.</code><code class="descname">wgtHighMedian</code><span class="sig-paren">(</span><em>x</em>, <em>weights=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lmrob.utils.wgtHighMedian" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the weighted Hi-Median of x.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Example:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">module</span><span class="o">.</span><span class="n">wgtHighMedian</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">12</span><span class="p">])</span>        
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> (<em>list</em>) – numeric vector</li>
+<li><strong>weights</strong> (<em>list</em>) – numeric vector of weights; of the same length as x.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The weighted Hi-Median of x.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">float</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last">ValueError</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">lmrob</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Installation.html">System Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Installation.html#id1">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tests.html">Testing the code</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../component_description.html">Componet Description</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">lmrob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lmrob.utils">utils</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../component_description.html">Componet Description</a><ul>
+      <li>Previous: <a href="../component_description.html" title="previous chapter">Componet Description</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.0b1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      
+      |
+      <a href="../_sources/_modules/lmrob.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

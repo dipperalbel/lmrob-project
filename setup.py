@@ -1,23 +1,29 @@
-import setuptools
+import subprocess
+import os
+import sys
+from setuptools import setup
+from distutils.command.build_py import build_py as _build_py
+class build_py(_build_py):
+    """Specialized Python source builder."""
+    def run(self):
+        command = "./tools/lmrob_lib_so/compile_lmrob_so.sh"
+        p = subprocess.Popen(command, shell=True)
+        p.wait()
+        if not os.path.exists("lmrob/liblmrob.so"):
+            raise Exception("liblmrob.so not found. Verify the requirements")
+        super().run()
+    
 
+    
 
-with open("README.md", "r") as fh:
-    long_description = fh.read()
+setup(
+    name='Lmrob',
+    packages=['lmrob'],
+    package_dir={'lmrob': 'lmrob'},
+    package_data={'lmrob': ['liblmrob.so']},
+    version='1.0',
+    author='',
+    cmdclass={'build_py': build_py},
+    install_requires=[package for package in open("requirements.txt")],
+    )
 
-
-setuptools.setup(
-    name="robustbase_pkg",
-    version="0.0.1",
-    author="Alberto Bellumat",
-    author_email="albertobellumat@gmail.com",
-    description="A small example package",
-    long_description=long_description,
-    long_description_content_type="text/markdown",
-    url="https://github.com/MrMagik/bellumat-alberto",
-    packages=setuptools.find_packages(),
-    classifiers=(
-        "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independent",
-    ),
-)
