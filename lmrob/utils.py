@@ -396,6 +396,7 @@ def model_frame_(formula, data, subset, weights, na_action, offset):
         }
         return dictReturn
 
+from rpy2.robjects.packages import importr
 def model_frame(formula, data, subset, weights, na_action, offset):
     # Make model -----
     Y, X = patsy.dmatrices(formula, data, NA_action=na_action, return_type='matrix')
