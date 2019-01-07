@@ -13,7 +13,6 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Componet Description" href="component_description.html" />
@@ -36,9 +35,9 @@
             
   <div class="section" id="testing-the-code">
 <span id="tests"></span><h1>Testing the code<a class="headerlink" href="#testing-the-code" title="Permalink to this headline">¶</a></h1>
-<p>There are two kinds of test, unitary an advanced tests. To try the unitary test do the following steps (it is required that you had installed the R robustbase package).</p>
-<div class="section" id="unitary-test">
-<h2>Unitary Test<a class="headerlink" href="#unitary-test" title="Permalink to this headline">¶</a></h2>
+<p>There are two kinds of test, unitary an advanced tests. To try the unitary test do the following steps</p>
+<div class="section" id="lmrob-unitary-test">
+<h2>lmrob Unitary Test<a class="headerlink" href="#lmrob-unitary-test" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><ol class="arabic">
 <li><dl class="first docutils">
@@ -86,8 +85,8 @@ test_mwgt <span class="o">(</span>test_lmrob.LmrobUtilities<span class="o">)</sp
 </ol>
 </div></blockquote>
 </div>
-<div class="section" id="advanced-test">
-<h2>Advanced Test<a class="headerlink" href="#advanced-test" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="lmrob-advanced-test">
+<h2>lmrob Advanced Test<a class="headerlink" href="#lmrob-advanced-test" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><ol class="arabic">
 <li><dl class="first docutils">
@@ -97,6 +96,13 @@ test_mwgt <span class="o">(</span>test_lmrob.LmrobUtilities<span class="o">)</sp
 </div>
 </dd>
 </dl>
+</li>
+<li><p class="first">Try all the tests</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>env<span class="o">)</span> $ <span class="nb">cd</span> tests/advancedtest/
+</pre></div>
+</div>
+</div></blockquote>
 </li>
 <li><p class="first">Run the following command</p>
 <blockquote>
@@ -249,6 +255,37 @@ METHOD: SMDM
 </ol>
 </div></blockquote>
 </div>
+<div class="section" id="nlrob-unitary-test">
+<h2>nlrob Unitary Test<a class="headerlink" href="#nlrob-unitary-test" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ol class="arabic">
+<li><dl class="first docutils">
+<dt>Move to tests directory</dt>
+<dd><div class="first last highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>env<span class="o">)</span> $ <span class="nb">cd</span> tests/unittest
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Try all the tests</dt>
+<dd><div class="first highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>env<span class="o">)</span> $ python -m unittest test_nlrob -v
+</pre></div>
+</div>
+<p>and you should get a the following</p>
+<div class="last highlight-bash notranslate"><div class="highlight"><pre><span></span>test_nlrob_cm <span class="o">(</span>test_nlrob.NlrobTestCase<span class="o">)</span> ... ok
+test_nlrob_mm <span class="o">(</span>test_nlrob.NlrobTestCase<span class="o">)</span> ... ok
+test_nlrob_mtl <span class="o">(</span>test_nlrob.NlrobTestCase<span class="o">)</span> ... ok
+test_nlrob_tau <span class="o">(</span>test_nlrob.NlrobTestCase<span class="o">)</span> ... ok
+test_nls <span class="o">(</span>test_nlrob.NlrobTestCase<span class="o">)</span> ... ok
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+</ol>
+</div></blockquote>
+</div>
 </div>
 
 
@@ -273,8 +310,9 @@ METHOD: SMDM
 <li class="toctree-l1"><a class="reference internal" href="Installation.html">System Requirements</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Installation.html#id1">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Testing the code</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#unitary-test">Unitary Test</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#advanced-test">Advanced Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lmrob-unitary-test">lmrob Unitary Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lmrob-advanced-test">lmrob Advanced Test</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nlrob-unitary-test">nlrob Unitary Test</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="component_description.html">Componet Description</a></li>
@@ -309,7 +347,7 @@ METHOD: SMDM
       &copy;2018.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.0b1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.7</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
       |

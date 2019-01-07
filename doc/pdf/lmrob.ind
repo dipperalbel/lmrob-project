@@ -1,0 +1,58 @@
+\begin{sphinxtheindex}
+\def\bigletter#1{{\Large\sffamily#1}\nopagebreak\vspace{1mm}}
+
+  \bigletter {Symbols}
+  \item \_\_init\_\_() (lmrob.utils.psi\_func method), \hyperpage{20}
+
+  \indexspace
+  \bigletter H
+  \item huberM() (in module lmrob.utils), \hyperpage{19}
+
+  \indexspace
+  \bigletter J
+  \item JDEoptim() (in module nlrob.utils), \hyperpage{28}
+
+  \indexspace
+  \bigletter L
+  \item lmrob (module), \hyperpage{11}
+  \item lmrob() (in module lmrob), \hyperpage{11}
+  \item lmrob.utils (module), \hyperpage{19}
+  \item lmrob\_\_D\_\_fit() (in module lmrob), \hyperpage{16}
+  \item lmrob\_\_M\_\_fit() (in module lmrob), \hyperpage{17}
+  \item lmrob\_fit() (in module lmrob), \hyperpage{13}
+  \item lmrob\_lar() (in module lmrob), \hyperpage{18}
+  \item lmrob\_M\_S() (in module lmrob), \hyperpage{15}
+  \item lmrob\_S() (in module lmrob), \hyperpage{14}
+
+  \indexspace
+  \bigletter M
+  \item mad() (in module lmrob.utils), \hyperpage{20}
+
+  \indexspace
+  \bigletter N
+  \item nlrob (module), \hyperpage{22}
+  \item nlrob() (in module nlrob), \hyperpage{22}
+  \item nlrob.utils (module), \hyperpage{28}
+  \item nlrob\_CM() (in module nlrob), \hyperpage{25}
+  \item nlrob\_MM() (in module nlrob), \hyperpage{24}
+  \item nlrob\_mtl() (in module nlrob), \hyperpage{26}
+  \item nlrob\_tau() (in module nlrob), \hyperpage{24}
+  \item nls() (in module nlrob), \hyperpage{27}
+
+  \indexspace
+  \bigletter P
+  \item psi\_func (class in lmrob.utils), \hyperpage{20}
+
+  \indexspace
+  \bigletter S
+  \item sumU() (in module lmrob.utils), \hyperpage{21}
+
+  \indexspace
+  \bigletter T
+  \item tauHuber() (in module lmrob.utils), \hyperpage{21}
+
+  \indexspace
+  \bigletter W
+  \item wgtHighMedian() (in module lmrob.utils), \hyperpage{21}
+
+\end{sphinxtheindex}

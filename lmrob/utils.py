@@ -396,7 +396,6 @@ def model_frame_(formula, data, subset, weights, na_action, offset):
         }
         return dictReturn
 
-from rpy2.robjects.packages import importr
 def model_frame(formula, data, subset, weights, na_action, offset):
     # Make model -----
     Y, X = patsy.dmatrices(formula, data, NA_action=na_action, return_type='matrix')
@@ -700,8 +699,6 @@ def _Mpsi(x, c_chi_, ipsi_, deriv=0):
         x = np.array([x])
     byref = ctypes.byref
     ipsi = ctypes.c_int(ipsi_)
-    #c_chi = ctypes.c_double(c_chi_)
-    #c_chi = _psi_conv_cc(psi, cc)
     c_chi_p = c_chi_.ctypes.data_as(ctypes.POINTER(ctypes.c_double))
     kernel_switch = {-1: lmroblib.rho,
                       0: lmroblib.psi,

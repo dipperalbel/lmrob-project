@@ -10,7 +10,7 @@ m0 <- lmrob(stack.loss ~ ., data = stackloss, method = "S",
                     compute.outlier.stats = "S")
 m0
 
-write.csv(m0$coefficients, file = "coeff_Smethod_base.csv", row.names = FALSE )
+write.csv   (m0$coefficients, file = "coeff_Smethod_base.csv", row.names = FALSE )
 write.csv(m0$residuals, file = "res_Smethod_base.csv", row.names = FALSE )
 
 ## MM

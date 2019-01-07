@@ -1,0 +1,754 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>nlrob &#8212; lmrob 20180828 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="lmrob" href="lmrob.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="nlrob">
+<span id="id1"></span><h1>nlrob<a class="headerlink" href="#nlrob" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-nlrob"></span><div class="section" id="id2">
+<h2>nlrob<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+</div>
+<dl class="function">
+<dt id="nlrob.nlrob">
+<code class="descclassname">nlrob.</code><code class="descname">nlrob</code><span class="sig-paren">(</span><em>formula</em>, <em>data</em>, <em>start=array([0.])</em>, <em>lower=array([-inf])</em>, <em>upper=array([inf])</em>, <em>weights=None</em>, <em>method='MM'</em>, <em>psi=None</em>, <em>scale=None</em>, <em>control=None</em>, <em>test_vec='resid'</em>, <em>maxit=20</em>, <em>tol=1e-06</em>, <em>algorithm='lm'</em>, <em>doCov=False</em>, <em>trace=False</em><span class="sig-paren">)</span><a class="headerlink" href="#nlrob.nlrob" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Fits a nonlinear regression model by robust methods. Per default, by an M-estimator, using iterated reweighted least squares (called “IRLS” or also “IWLS”).
+This function returns a dictionary with the results</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>formula: str</strong></dt>
+<dd><p class="first last">A nonlinear formula including variables and parameters of the model,
+such as y ~ f(x, theta) (cf. nls). (For some checks: if f(.) is 
+linear, then we need parentheses, e.g., y ~ (a + b * x)</p>
+</dd>
+<dt><strong>data: pandas.core.frame.DataFrame</strong></dt>
+<dd><p class="first last">Data frame containing the variables in the model. If not found in
+data, the variables are taken from environment(formula), typically
+the environment from which nlrob is called.</p>
+</dd>
+<dt><strong>start: pandas.core.frame.DataFrame</strong></dt>
+<dd><p class="first last">A named numeric vector of starting parameters estimates, only for
+method = “M”.</p>
+</dd>
+<dt><strong>lower: pandas.core.frame.DataFrame</strong></dt>
+<dd><p class="first last">numeric vectors of lower and upper bounds; if needed, will be
+replicated to be as long as the longest of start, lower or upper. For
+(the default) method = “M”, if the bounds are unspecified all
+parameters are assumed to be unconstrained; also, for method “M”,
+bounds can only be used with the “port” algorithm. They are ignored,
+with a warning, in cases they have no effect.
+For methods “CM” and “mtl”, the bounds must additionally have an entry
+named “sigma” as that is determined simultaneously in the same
+optimization, and hence its lower bound must not be negative.</p>
+</dd>
+<dt><strong>upper:  array_like</strong></dt>
+<dd><p class="first last">numeric vectors of lower and upper bounds; if needed, will be
+replicated to be as long as the longest of start, lower or upper. For
+(the default) method = “M”, if the bounds are unspecified all
+parameters are assumed to be unconstrained; also, for method “M”,
+bounds can only be used with the “port” algorithm. They are ignored,
+with a warning, in cases they have no effect.</p>
+</dd>
+<dt><strong>weights: arrray_like</strong></dt>
+<dd><p class="first last">An optional vector of weights to be used in the fitting process (for
+intrinsic weights, not the weights w used in the iterative (robust)
+fit). I.e., sum(w * e^2) is minimized with e = residuals,
+e[i] = y[i] - f(xreg[i], theta), where f(x, theta) is the nonlinear
+function, and w are the robust weights from resid * weights.</p>
+</dd>
+<dt><strong>method: str</strong></dt>
+<dd><p class="first last">a character string specifying which method to use. The default is “M”, for historical and back-compatibility reasons. For the other methods, primarily see nlrob.algorithms.
+“M”
+Computes an M-estimator, using nls(<em>, weights=</em>) iteratively (hence, IRLS) with weights equal to ψ(r_i) / r_i, where r_i is the i-the residual from the previous fit.
+“MM”
+Computes an MM-estimator, starting from init, either “S” or “lts”.
+“tau”
+Computes a Tau-estimator.
+“CM”
+Computes a “Constrained M” (=: CM) estimator.
+“mtl”
+Compute as “Maximum Trimmed Likelihood” (=: MTL) estimator.
+Note that all methods but “M” are “random”, hence typically to be preceded by set.seed() in usage.</p>
+</dd>
+<dt><strong>psi: func</strong></dt>
+<dd><p class="first last">A function of the form g(x, ‘tuning constant(s)’, deriv) that for deriv=0 returns psi(x)/x and for deriv=1 returns psi’(x). Note that tuning constants can not be passed separately, but directly via the specification of psi, typically via a simple _Mwgt_psi1() call as per default.</p>
+</dd>
+<dt><strong>scale: float</strong></dt>
+<dd><p class="first last">When not None, a positive number specifying a scale kept fixed during
+the iterations (and returned as Scale component).</p>
+</dd>
+<dt><strong>test_vec: str</strong></dt>
+<dd><p class="first last">Character string specifying the convergence criterion. The relative
+change is tested for residuals with a value of “resid” (the default),
+for coefficients with “coef”, and for weights with “w”.</p>
+</dd>
+<dt><strong>maxit: int</strong></dt>
+<dd><p class="first last">maximum number of iterations in the robust loop.</p>
+</dd>
+<dt><strong>tol: float</strong></dt>
+<dd><p class="first last">non-negative convergence tolerance for the robust fit.</p>
+</dd>
+<dt><strong>algorithm: str</strong></dt>
+<dd><p class="first last">character string specifying the algorithm to use for nls, see there, 
+only when method = “M”. The default algorithm is a Gauss-Newton 
+algorithm.</p>
+</dd>
+<dt><strong>doCov: bool</strong></dt>
+<dd><p class="first last">a logical specifying if nlrob() should compute the asymptotic 
+variance-covariance matrix (see vcov) already. This used to be 
+hard-wired to TRUE; however, the default has been set to FALSE, as vcov
+(obj) and summary(obj) can easily compute it when needed.</p>
+</dd>
+<dt><strong>control: obj</strong></dt>
+<dd><p class="first last">An optional object of control settings.</p>
+</dd>
+<dt><strong>trace: bool</strong></dt>
+<dd><p class="first last">logical value indicating if a “trace” of the nls iteration progress 
+should be printed. Default is False. 
+If True, in each robust iteration, the residual sum-of-squares and the 
+parameter values are printed at the conclusion of each nls iteration.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>coefficients: array_like</strong></dt>
+<dd><p class="first last">Coefficients of the regressor</p>
+</dd>
+<dt><strong>residuals: array_like</strong></dt>
+<dd><p class="first last">Difference between the real values and the fitted_values</p>
+</dd>
+<dt><strong>fitted_values: array_like</strong></dt>
+<dd><p class="first last">Estimated values by th regressor</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#nlrob.nlrob_MM" title="nlrob.nlrob_MM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlrob_MM</span></code></a>, <a class="reference internal" href="#nlrob.nlrob_tau" title="nlrob.nlrob_tau"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlrob_tau</span></code></a>, <a class="reference internal" href="#nlrob.nlrob_CM" title="nlrob.nlrob_CM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlrob_CM</span></code></a>, <a class="reference internal" href="#nlrob.nlrob_mtl" title="nlrob.nlrob_mtl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlrob_mtl</span></code></a></p>
+</div>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nlrob</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">formula</span> <span class="o">=</span> <span class="s2">&quot;density ~ Asym/(1 + np.exp(( xmid - np.log(conc) )/scal))&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lower</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">([</span><span class="s2">&quot;Asym&quot;</span><span class="p">,</span> <span class="s2">&quot;xmid&quot;</span><span class="p">,</span> <span class="s2">&quot;scal&quot;</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">))),</span>
+<span class="gp">... </span>        <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">upper</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;Function=NLROBInput.csv&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># M Method</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;M&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Rfit</span> <span class="o">=</span> <span class="n">nlrob</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlrob.nlrob_MM">
+<code class="descclassname">nlrob.</code><code class="descname">nlrob_MM</code><span class="sig-paren">(</span><em>formula</em>, <em>data</em>, <em>lower</em>, <em>upper</em>, <em>tol=1e-06</em>, <em>psi='bisquare'</em>, <em>init='S'</em>, <em>ctrl=&lt;nlrob.nlrob.NlrobControl object&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#nlrob.nlrob_MM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute an MM-estimator for nonlinear robust (constrained) regression.
+Returns a dictionary with all the variables of interest</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>formula: str</strong></dt>
+<dd><p class="first last">A nonlinear formula including variables and parameters of the model,
+such as y ~ f(x, theta)</p>
+</dd>
+<dt><strong>data: pandas.core.frame.DataFrame</strong></dt>
+<dd><p class="first last">Data frame containing the variables in the model. If not found in
+data, the variables are taken from environment(formula), typically
+the environment from which nlrob is called.</p>
+</dd>
+<dt><strong>lower: pandas.core.frame.DataFrame</strong></dt>
+<dd><p class="first last">A vector of starting estimates.</p>
+</dd>
+<dt><strong>upper: array_like</strong></dt>
+<dd><p class="first last">upper bound, the shape could be 1 or the the same of lower.</p>
+</dd>
+<dt><strong>psi: str</strong></dt>
+<dd><p class="first last">A function (possibly by name) of the form g(x, ‘tuning constant(s)’,
+deriv)
+that for deriv=0 returns (x)/x and for deriv=1 returns  0 (x).</p>
+</dd>
+<dt><strong>init: str</strong></dt>
+<dd></dd>
+<dt><strong>ctrl: object</strong></dt>
+<dd><p class="first last">NlrobControl Class</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>coefficients: array_like</strong></dt>
+<dd><p class="first last">Numeric vector of coefficient estimates.</p>
+</dd>
+<dt><strong>fitted_values</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array_like</span></dt>
+<dd></dd>
+<dt><strong>residuals: array_like</strong></dt>
+<dd><p class="first last">numeric vector of the residuals.</p>
+</dd>
+<dt><strong>hessian: array_like</strong></dt>
+<dd><p class="first last">hessian matrix</p>
+</dd>
+<dt><strong>ctrl: object</strong></dt>
+<dd><p class="first last">NlrobControl Class</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#module-nlrob" title="nlrob"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlrob</span></code></a>, <a class="reference internal" href="#nlrob.nlrob_tau" title="nlrob.nlrob_tau"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlrob_tau</span></code></a>, <a class="reference internal" href="#nlrob.nlrob_CM" title="nlrob.nlrob_CM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlrob_CM</span></code></a>, <a class="reference internal" href="#nlrob.nlrob_mtl" title="nlrob.nlrob_mtl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlrob_mtl</span></code></a></p>
+</div>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nlrob</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">formula</span> <span class="o">=</span> <span class="s2">&quot;density ~ Asym/(1 + np.exp(( xmid - np.log(conc) )/scal))&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lower</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">([</span><span class="s2">&quot;Asym&quot;</span><span class="p">,</span> <span class="s2">&quot;xmid&quot;</span><span class="p">,</span> <span class="s2">&quot;scal&quot;</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">))),</span>
+<span class="gp">... </span>        <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">upper</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;Submodule=NLROBMM.Data=Input.csv&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Rfit_MM</span> <span class="o">=</span> <span class="n">nlrob_MM</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlrob.nlrob_tau">
+<code class="descclassname">nlrob.</code><code class="descname">nlrob_tau</code><span class="sig-paren">(</span><em>formula</em>, <em>data</em>, <em>lower</em>, <em>upper</em>, <em>tol=1e-06</em>, <em>psi='bisquare'</em>, <em>ctrl=&lt;nlrob.nlrob.NlrobControl object&gt;</em>, <em>tuning_chi_scale=None</em>, <em>tuning_chi_tau=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nlrob.nlrob_tau" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes a Tau-estimator for nonlinear robust (constrained) regression.
+Returns a dictionary with all the variables of interest</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>formula: str</strong></dt>
+<dd><p class="first last">A nonlinear formula including variables and parameters of the model,
+such as y ~ f(x, theta)</p>
+</dd>
+<dt><strong>data: pandas.core.frame.DataFrame</strong></dt>
+<dd><p class="first last">Data frame containing the variables in the model. If not found in
+data, the variables are taken from environment(formula), typically
+the environment from which nlrob is called.</p>
+</dd>
+<dt><strong>lower: pandas.core.frame.DataFrame</strong></dt>
+<dd><p class="first last">Dataframe with the initial guesses</p>
+</dd>
+<dt><strong>upper: array_like</strong></dt>
+<dd><p class="first last">upper bound, the shape could be 1 or the the same of lower.</p>
+</dd>
+<dt><strong>psi: str</strong></dt>
+<dd><p class="first last">A function (possibly by name) of the form g(x, ‘tuning constant(s)’,
+deriv)
+that for deriv=0 returns (x)/x and for deriv=1 returns  0 (x).</p>
+</dd>
+<dt><strong>init: str</strong></dt>
+<dd></dd>
+<dt><strong>ctrl: object</strong></dt>
+<dd><p class="first last">NlrobControl Class</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>coefficients: array_like</strong></dt>
+<dd><p class="first last">Numeric vector of coefficient estimates.</p>
+</dd>
+<dt><strong>fitted_values</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array_like</span></dt>
+<dd></dd>
+<dt><strong>residuals: array_like</strong></dt>
+<dd><p class="first last">numeric vector of the residuals.</p>
+</dd>
+<dt><strong>hessian: array_like</strong></dt>
+<dd><p class="first last">hessian matrix</p>
+</dd>
+<dt><strong>ctrl: object</strong></dt>
+<dd><p class="first last">NlrobControl Class</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#module-nlrob" title="nlrob"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlrob</span></code></a>, <a class="reference internal" href="#nlrob.nlrob_MM" title="nlrob.nlrob_MM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlrob_MM</span></code></a>, <a class="reference internal" href="#nlrob.nlrob_CM" title="nlrob.nlrob_CM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlrob_CM</span></code></a>, <a class="reference internal" href="#nlrob.nlrob_mtl" title="nlrob.nlrob_mtl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlrob_mtl</span></code></a></p>
+</div>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nlrob</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">formula</span> <span class="o">=</span> <span class="s2">&quot;density ~ Asym/(1 + np.exp(( xmid - np.log(conc) )/scal))&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lower</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">([</span><span class="s2">&quot;Asym&quot;</span><span class="p">,</span> <span class="s2">&quot;xmid&quot;</span><span class="p">,</span> <span class="s2">&quot;scal&quot;</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">))),</span>
+<span class="gp">... </span>        <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">upper</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;Submodule=NLROBTAU.Data=Input.csv&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Rfit_tau</span> <span class="o">=</span> <span class="n">nlrob_tau</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlrob.nlrob_CM">
+<code class="descclassname">nlrob.</code><code class="descname">nlrob_CM</code><span class="sig-paren">(</span><em>formula</em>, <em>data</em>, <em>lower</em>, <em>upper</em>, <em>tol=1e-06</em>, <em>psi='bisquare'</em>, <em>ctrl=&lt;nlrob.nlrob.NlrobControl object&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#nlrob.nlrob_CM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute an MM-estimator for nonlinear robust (constrained) regression.
+Returns a dictionary with all the variables of interest
+Parameters
+———-</p>
+<dl class="docutils">
+<dt>formula: str</dt>
+<dd>A nonlinear formula including variables and parameters of the model,
+such as y ~ f(x, theta)</dd>
+<dt>data: pandas.core.frame.DataFrame</dt>
+<dd>Data frame containing the variables in the model. If not found in
+data, the variables are taken from environment(formula), typically
+the environment from which nlrob is called.</dd>
+<dt>lower: pandas.core.frame.DataFrame</dt>
+<dd>Dataframe with the initial guesses</dd>
+<dt>upper: array_like</dt>
+<dd>upper bound, the shape could be 1 or the the same of lower.</dd>
+<dt>psi: str</dt>
+<dd>A function (possibly by name) of the form g(x, ‘tuning constant(s)’,
+deriv)
+that for deriv=0 returns (x)/x and for deriv=1 returns  0 (x).</dd>
+</dl>
+<p>init: str
+ctrl: object</p>
+<blockquote>
+<div>NlrobControl Class</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>coefficients: array_like</strong></dt>
+<dd><p class="first last">Numeric vector of coefficient estimates.</p>
+</dd>
+<dt><strong>fitted_values</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array_like</span></dt>
+<dd></dd>
+<dt><strong>residuals: array_like</strong></dt>
+<dd><p class="first last">numeric vector of the residuals.</p>
+</dd>
+<dt><strong>hessian: array_like</strong></dt>
+<dd><p class="first last">hessian matrix</p>
+</dd>
+<dt><strong>ctrl: object</strong></dt>
+<dd><p class="first last">NlrobControl Class</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#module-nlrob" title="nlrob"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlrob</span></code></a>, <a class="reference internal" href="#nlrob.nlrob_MM" title="nlrob.nlrob_MM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlrob_MM</span></code></a>, <a class="reference internal" href="#nlrob.nlrob_tau" title="nlrob.nlrob_tau"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlrob_tau</span></code></a>, <a class="reference internal" href="#nlrob.nlrob_mtl" title="nlrob.nlrob_mtl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlrob_mtl</span></code></a></p>
+</div>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nlrob</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">formula</span> <span class="o">=</span> <span class="s2">&quot;density ~ Asym/(1 + np.exp(( xmid - np.log(conc) )/scal))&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lower</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">([</span><span class="s2">&quot;Asym&quot;</span><span class="p">,</span> <span class="s2">&quot;xmid&quot;</span><span class="p">,</span> <span class="s2">&quot;scal&quot;</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">))),</span>
+<span class="gp">... </span>        <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">upper</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;Submodule=NLROBCM.Data=Input.csv&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Rfit_CM</span> <span class="o">=</span> <span class="n">nlrob_cm</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlrob.nlrob_mtl">
+<code class="descclassname">nlrob.</code><code class="descname">nlrob_mtl</code><span class="sig-paren">(</span><em>formula</em>, <em>data</em>, <em>lower</em>, <em>upper</em>, <em>tol=1e-06</em>, <em>psi='bisquare'</em>, <em>ctrl=&lt;nlrob.nlrob.NlrobControl object&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#nlrob.nlrob_mtl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute a mtl-estimator for nonlinear robust (constrained) regression</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>formula: str</strong></dt>
+<dd><p class="first last">A nonlinear formula including variables and parameters of the model,
+such as y ~ f(x, theta)</p>
+</dd>
+<dt><strong>data: pandas.core.frame.DataFrame</strong></dt>
+<dd><p class="first last">Data frame containing the variables in the model. If not found in
+data, the variables are taken from environment(formula), typically
+the environment from which nlrob is called.</p>
+</dd>
+<dt><strong>lower: pandas.core.frame.DataFrame</strong></dt>
+<dd><p class="first last">Dataframe with the initial guesses</p>
+</dd>
+<dt><strong>upper: array_like</strong></dt>
+<dd><p class="first last">upper bound, the shape could be 1 or the the same of lower.</p>
+</dd>
+<dt><strong>psi: str</strong></dt>
+<dd><p class="first last">A function (possibly by name) of the form g(x, ‘tuning constant(s)’,
+deriv)
+that for deriv=0 returns (x)/x and for deriv=1 returns  0 (x).</p>
+</dd>
+<dt><strong>init: str</strong></dt>
+<dd></dd>
+<dt><strong>ctrl: object</strong></dt>
+<dd><p class="first last">NlrobControl Class</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>coefficients: array_like</strong></dt>
+<dd><p class="first last">Numeric vector of coefficient estimates.</p>
+</dd>
+<dt><strong>fitted_values</strong> <span class="classifier-delimiter">:</span> <span class="classifier">array_like</span></dt>
+<dd></dd>
+<dt><strong>residuals: array_like</strong></dt>
+<dd><p class="first last">numeric vector of the residuals.</p>
+</dd>
+<dt><strong>hessian: array_like</strong></dt>
+<dd><p class="first last">hessian matrix</p>
+</dd>
+<dt><strong>ctrl: object</strong></dt>
+<dd><p class="first last">NlrobControl Class</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#module-nlrob" title="nlrob"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlrob</span></code></a>, <a class="reference internal" href="#nlrob.nlrob_MM" title="nlrob.nlrob_MM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlrob_MM</span></code></a>, <a class="reference internal" href="#nlrob.nlrob_tau" title="nlrob.nlrob_tau"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlrob_tau</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">nlrob_cm</span></code></p>
+</div>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nlrob</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">formula</span> <span class="o">=</span> <span class="s2">&quot;density ~ Asym/(1 + np.exp(( xmid - np.log(conc) )/scal))&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lower</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">([</span><span class="s2">&quot;Asym&quot;</span><span class="p">,</span> <span class="s2">&quot;xmid&quot;</span><span class="p">,</span> <span class="s2">&quot;scal&quot;</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">))),</span>
+<span class="gp">... </span>        <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">upper</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;Submodule=NLROBMTL.Data=Input.csv&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Rfit_mtl</span> <span class="o">=</span> <span class="n">nlrob_mtl</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="nlrob.nls">
+<code class="descclassname">nlrob.</code><code class="descname">nls</code><span class="sig-paren">(</span><em>formula</em>, <em>data</em>, <em>start</em>, <em>algorithm='lm'</em>, <em>weights=None</em>, <em>lower=array([-inf])</em>, <em>upper=array([inf])</em><span class="sig-paren">)</span><a class="headerlink" href="#nlrob.nls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine the nonlinear (weighted) least-squares estimates of the parameters of a nonlinear model.</p>
+<p>Usage</p>
+<dl class="docutils">
+<dt>nls(formula, data, start, control, algorithm,</dt>
+<dd>trace, subset, weights, na.action, model,
+lower, upper, …)</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>formula: str</strong></dt>
+<dd><p class="first last">a nonlinear model formula including variables and parameters. Will be coerced to a formula if necessary.</p>
+</dd>
+<dt><strong>data: pandas.core.frame.DataFrame</strong></dt>
+<dd><p class="first last">Data frame in which to evaluate the variables in formula and weights. Can also be a list or an environment, but not a matrix.</p>
+</dd>
+<dt><strong>start: pandas.core.frame.DataFrame</strong></dt>
+<dd><p class="first last">A vector of starting estimates.</p>
+</dd>
+<dt><strong>algorithm: str</strong></dt>
+<dd><p class="first last">Character string specifying the algorithm to use. The default algorithm is a “lm” algorithm. Other possible values are ‘trf’, ‘dogbox’</p>
+</dd>
+<dt><strong>lower: scalar, array_like</strong></dt>
+<dd><p class="first last">Lower bounds on Parameters. An array with the length equal
+to the number of parameters, or a scalar (in which case the bound is
+taken to be the same for all parameters.)</p>
+</dd>
+<dt><strong>upper: scalar, array_like</strong></dt>
+<dd><p class="first last">Upper bounds on Parameters. An array with the length equal
+to the number of parameters, or a scalar (in which case the bound is
+taken to be the same for all parameters.)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>coefficients: array_like</strong></dt>
+<dd><p class="first last">Numeric vector of coefficient estimates.</p>
+</dd>
+<dt><strong>residuals: array_like</strong></dt>
+<dd><p class="first last">numeric vector of the residuals.</p>
+</dd>
+<dt><strong>cov: array_like</strong></dt>
+<dd><p class="first last">covariance matrix</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#module-nlrob" title="nlrob"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlrob</span></code></a>, <a class="reference internal" href="#nlrob.nlrob_MM" title="nlrob.nlrob_MM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlrob_MM</span></code></a>, <a class="reference internal" href="#nlrob.nlrob_tau" title="nlrob.nlrob_tau"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nlrob_tau</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">nlrob_cm</span></code></p>
+</div>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nlrob</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">formula</span> <span class="o">=</span> <span class="s2">&quot;density ~ Asym/(1 + np.exp(( xmid - np.log(conc) )/scal))&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lower</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">([</span><span class="s2">&quot;Asym&quot;</span><span class="p">,</span> <span class="s2">&quot;xmid&quot;</span><span class="p">,</span> <span class="s2">&quot;scal&quot;</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">))),</span>
+<span class="gp">... </span>        <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">upper</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;Submodule=NLS.Data=Input.csv&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Rfit_nls</span> <span class="o">=</span> <span class="n">nls</span><span class="p">(</span><span class="n">formula</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">lower</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-nlrob.utils">
+<span id="utils"></span><h1>utils<a class="headerlink" href="#module-nlrob.utils" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="nlrob.utils.JDEoptim">
+<code class="descclassname">nlrob.utils.</code><code class="descname">JDEoptim</code><span class="sig-paren">(</span><em>lower</em>, <em>upper</em>, <em>fn</em>, <em>constr=None</em>, <em>meq=0</em>, <em>eps=1e-05</em>, <em>NP=None</em>, <em>Fl=0.1</em>, <em>Fu=1</em>, <em>tau_F=0.1</em>, <em>tau_CR=0.1</em>, <em>tau_pF=0.1</em>, <em>jitter_factor=0.001</em>, <em>tol=1e-15</em>, <em>maxiter=None</em>, <em>fnscale=1</em>, <em>compare_to=None</em>, <em>add_to_init_pop=None</em>, <em>trace=False</em>, <em>triter=1</em>, <em>details=False</em><span class="sig-paren">)</span><a class="headerlink" href="#nlrob.utils.JDEoptim" title="Permalink to this definition">¶</a></dt>
+<dd><p>An implementation of a bespoke jDE variant of the Differential Evolution
+stochastic algorithm for global optimization of nonlinear programming
+problems</p>
+<p>Usage</p>
+<dl class="docutils">
+<dt>JDEoptim(lower, upper, fn,constr=None, meq=0, eps=1e-5,</dt>
+<dd>NP=None, Fl=0.1, Fu=1, tau_F=0.1, tau_CR=0.1,
+tau_pF=0.1, jitter_factor=0.001, tol=1e-15,
+maxiter=None, fnscale=1, compare_to=None,
+add_to_init_pop=None, trace=False, triter=1,
+details=False)</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>lower, upper: array_like</strong></dt>
+<dd><p class="first last">numeric vectors of lower or upper bounds, respectively, for the
+parameters to be optimized over. Must be finite as they bound the hyper
+rectangle of the initial random population.</p>
+</dd>
+<dt><strong>fn: function</strong></dt>
+<dd><p class="first last">(nonlinear) objective function to be minimized. It takes as first
+argument the vector of parameters over which minimization is to take
+place. It must return the value of the function at that point.</p>
+</dd>
+<dt><strong>constr: function</strong></dt>
+<dd><p class="first last">an optional function for specifying the nonlinear constraints under
+which we want to minimize fn. They should be given in the form
+$h_i(x) = 0, g_i(x) le 0$. This function takes the vector of parameters
+as its first argument and returns a real vector with the length of the
+total number of constraints. It defaults to None, meaning that
+bound-constrained minimization is used.</p>
+</dd>
+<dt><strong>meq: integer</strong></dt>
+<dd><p class="first last">an optional positive integer specifying that the first meq constraints
+are treated as equality constraints, all the remaining as inequality
+constraints. Defaults to 0 (inequality constraints only).</p>
+</dd>
+<dt><strong>eps: float</strong></dt>
+<dd><p class="first last">maximal admissible constraint violation for equality constraints. An
+optional real vector of small positive tolerance values with length meq
+used in the transformation of equalities into inequalities of the form
+$|h_i(x)| - epsilon le 0$. A scalar value is expanded to apply to all
+equality constraints. Default is 1e-5.</p>
+</dd>
+<dt><strong>NP: int</strong></dt>
+<dd><p class="first last">an optional positive integer giving the number of candidate solutions in
+the randomly distributed initial population. Defaults to
+10*length(lower).</p>
+</dd>
+<dt><strong>FL: float</strong></dt>
+<dd><p class="first last">an optional scalar which represents the minimum value that the scaling
+factor F could take. Default is 0.1, which is almost always satisfactory.</p>
+</dd>
+<dt><strong>Fu: float</strong></dt>
+<dd><p class="first last">an optional scalar which represents the maximum value that the scaling
+factor F could take. Default is 1, which is almost always satisfactory.</p>
+</dd>
+<dt><strong>tau_F: float</strong></dt>
+<dd><p class="first last">an optional scalar which represents the probability that the scaling
+factor F is updated. Defaults to 0.1, which is almost always
+satisfactory.</p>
+</dd>
+<dt><strong>tau_CR: float</strong></dt>
+<dd><p class="first last">an optional scalar which represents the probability that the mutation
+probability $pF$ in the mutation strategy DE/rand/1/either-or is updated.
+Defaults to 0.1.</p>
+</dd>
+<dt><strong>jitter_factor: float</strong></dt>
+<dd><p class="first last">an optional tuning constant for jitter. If None L only dither is used.
+Defaults to 0.001.</p>
+</dd>
+<dt><strong>tol: float</strong></dt>
+<dd><p class="first last">an optional positive scalar giving the tolerance for the stopping
+criterion. Default is 1e-15.</p>
+</dd>
+<dt><strong>maxiter: int</strong></dt>
+<dd><p class="first last">an optional positive integer specifying the maximum number of iterations
+that may be performed before the algorithm is halted. Defaults to
+200*length(lower).</p>
+</dd>
+<dt><strong>fnscale: float</strong></dt>
+<dd><p class="first last">an optional positive scalar specifying the typical magnitude of fn.
+It is used only in the stopping criterion. Defaults to 1. See ‘Details’.</p>
+</dd>
+<dt><strong>compare_to: str</strong></dt>
+<dd><p class="first last">an optional character string controlling which function should be
+applied to the fn values of the candidate solutions in a generation to
+be compared with the so-far best one when evaluating the stopping
+criterion. If “median” the median function is used; else, if “max” the
+max function is used. It defaults to “median”.</p>
+</dd>
+<dt><strong>add_to_init_pop: array_like</strong></dt>
+<dd><p class="first last">an optional real vector of length length(lower) or matrix with
+length(lower) rows specifying initial values of the parameters to be
+optimized which are appended to the randomly generated initial
+population. It defaults to None.</p>
+</dd>
+<dt><strong>trace: boolean</strong></dt>
+<dd><p class="first last">an optional logical value indicating if a trace of the iteration
+progress should be printed. Default is False.</p>
+</dd>
+<dt><strong>triter: int</strong></dt>
+<dd><p class="first last">an optional positive integer that controls the frequency of tracing when
+trace=True. Default is triter=1, which means that iteration: &lt;value of
+stopping test&gt; (value of best solution) best solution {index of
+violated constraints} is printed at every iteration.</p>
+</dd>
+<dt><strong>details: boolean</strong></dt>
+<dd><p class="first last">an optional logical value. If True the output will contain the
+parameters in the final population and their respective fn values.
+Defaults to False.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">lmrob</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Installation.html">System Requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Installation.html#id1">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tests.html">Testing the code</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../component_description.html">Componet Description</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="lmrob.html">lmrob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lmrob.html#module-lmrob.utils">utils</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">nlrob</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-nlrob.utils">utils</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../component_description.html">Componet Description</a><ul>
+      <li>Previous: <a href="lmrob.html" title="previous chapter">lmrob</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.7</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      
+      |
+      <a href="../_sources/_modules/nlrob.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

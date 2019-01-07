@@ -3,10 +3,10 @@
 Testing the code
 ================
 
-There are two kinds of test, unitary an advanced tests. To try the unitary test do the following steps (it is required that you had installed the R robustbase package).
+There are two kinds of test, unitary an advanced tests. To try the unitary test do the following steps
 
-Unitary Test
-------------
+lmrob Unitary Test
+------------------
     #. Move to tests directory
         .. code-block:: bash
         
@@ -46,13 +46,19 @@ Unitary Test
             test_mpsi (test_lmrob.LmrobUtilities) ... ok
             test_mwgt (test_lmrob.LmrobUtilities) ... ok
 
-Advanced Test
--------------
+lmrob Advanced Test
+-------------------
     #. Move to tests directory
         .. code-block:: bash
         
             (env) $ cd tests/advancedtest/
 
+
+    #. Try all the tests
+        
+        .. code-block:: bash
+
+            (env) $ cd tests/advancedtest/
 
     #. Run the following command
 
@@ -199,3 +205,25 @@ Advanced Test
             |     1.48643028 |          1.48643029 | 4.35506e-09 |
             |    -9.08847985 |         -9.08847991 | 5.40456e-08 |
             +----------------+---------------------+-------------+
+
+nlrob Unitary Test
+------------------
+    #. Move to tests directory
+        .. code-block:: bash
+        
+            (env) $ cd tests/unittest
+
+    #. Try all the tests
+        .. code-block:: bash
+
+            (env) $ python -m unittest test_nlrob -v
+
+        and you should get a the following
+
+        .. code-block:: bash
+
+            test_nlrob_cm (test_nlrob.NlrobTestCase) ... ok
+            test_nlrob_mm (test_nlrob.NlrobTestCase) ... ok
+            test_nlrob_mtl (test_nlrob.NlrobTestCase) ... ok
+            test_nlrob_tau (test_nlrob.NlrobTestCase) ... ok
+            test_nls (test_nlrob.NlrobTestCase) ... ok

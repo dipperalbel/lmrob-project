@@ -21,10 +21,10 @@ Installing the required packages
 Install a virtualenv
     .. code-block:: bash
 
-        $ sudo apt install virtualenv
+        sudo apt install virtualenv
 
 
-Create virtualev. Avoid to use the command sudo before virtualenv.
+Create virtualev
     .. code-block:: bash
 
         $ virtualenv -p python3 /path/to/env
@@ -34,13 +34,8 @@ Activate the virtualenv
 
         $ source /path/to/env/bin/activate
 
-Installing the python modules required for lmrob
 
-    .. code-block:: bash
-
-        (env) $ python setup.py install
-
-Installing lmrob
+Installing lmrob amd nlrob
 
     .. code-block:: bash
 
@@ -54,11 +49,5 @@ The following compilers must be installed in the system:
 * gcc
 * gfortran
 
-If the ``Python.h`` is not found install python-devel to the system.
-
-Installing python-devel
-
-    .. code-block:: bash
-
-	$ sudo apt install python3-dev
+If the ``Python.h`` is not found install python-devel to the system
 
